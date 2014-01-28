@@ -28,10 +28,40 @@
         <!--[if lt IE 9]>
         <script src="lib/js/html5shiv.js"></script>
         <![endif]-->
+        <style>
+            div.seam {
+                background: #007777 !important;
+            }
+
+            div.codi {
+                background: #995500 !important;
+            }
+
+            div.deltaspike {
+                background: #993377 !important;
+            }
+
+            div.other-framework {
+                background: #333333 !important;
+            }
+
+            div.module-box {
+                display: inline-block;
+                font-size: 0.6em;
+                padding: 10px;
+                line-height: 1em;
+                box-shadow: 2px 2px 6px 0 rgba(0,0,0,0.2);
+                border-radius: 10px;
+                width: 140px;
+            }
+
+            div.invisible {
+                visibility: hidden;
+            }
+        </style>
     </head>
 
     <body>
-
         <div class="reveal">
 
             <!-- Any section element inside of this container is displayed as a slide -->
@@ -75,6 +105,7 @@
                     <section>
                         <h2>CDI</h2>
                         <p>Contexts and Dependency Injection</p>
+                        <p class="fragment">Weld, OWB, CanDI</p>
                         <p class="fragment">Type-safe resolution, Scopes</p>
                         <pre class="fragment" style="width: 98%; display: inline-block;"><code data-trim class="java">
 public class UserController {
@@ -142,14 +173,163 @@ public changePassword(Credentials c) {
                     <p class="fragment">Provide beans, augment existing beans</p>
                     <p class="fragment">Catch system events for deployment phases<br /><small>before/after deployment, per bean, per injection point</small></p>
                 </section>
-                
+
                 <section>
-                    <h2>CDI extensions</h2>
-                    <p>SPI for integration with other technologies<br /><small>Seam, Spring, GWT, ...</small></p>
-                    <p class="fragment">ServiceLoader pattern<br /><small>META-INF/services</small></p>
-                    <p class="fragment">Custom scopes<br /><small><code>@PageScope, @BusinessProcessScope</code></small></p>
-                    <p class="fragment">Provide beans, augment existing beans</p>
-                    <p class="fragment">Catch system events for deployment phases<br /><small>before/after deployment, per bean, per injection point</small></p>
+                    <h2>Existing extensions</h2>
+                    <p class="fragment">Many integrations with other frameworks</p>
+                    <p class="fragment">PicketLink, RestEasy, Agorava, &hellip;</p>
+                    <br />
+                    <h3 class="fragment">Frameworks</h3>
+                    <p class="fragment"><small>zk, SoftwareMill</small></p>
+                    <p class="fragment current-visible">Seam 3, MyFaces CODI</p>
+                    <p class="fragment"></p>
+                </section>
+
+                <!-- DUMMY SECTION, FIX HEIGHT + TRANSITION HELPER -->
+                <section data-transition="fade">
+                    <h2>Frameworks</h2>
+                    <div class="invisible">
+                        <p><img src="img/seam.png" width="45"  style="border: none; background: none; box-shadow: none; margin: 0 10px 0 0; vertical-align: bottom" />JBoss Seam 3</p>
+                        <div>
+                            <div class="module-box seam">Solder</div>
+                            <div class="module-box seam">Config</div>
+                            <div class="module-box seam">Catch</div>
+                            <div class="module-box seam">Security</div>
+                            <div class="module-box seam">Social</div>
+                            <div class="module-box seam">Mail</div>
+                            <div class="module-box seam">Transaction</div>
+                            <div class="module-box seam">Render</div>
+                            <div class="module-box seam">Cron</div>
+                            <div class="module-box seam">Reports</div>
+                            <div class="module-box seam">Remoting</div>
+                            <div class="module-box seam">Rest</div>
+                            <div class="module-box seam">JMS</div>
+                            <div class="module-box seam">Persistence</div>
+                            <div class="module-box seam">Validation</div>
+                            <div class="module-box seam">Servlet</div>
+                            <div class="module-box seam">Wicket</div>
+                            <div class="module-box seam">Drools</div>
+                            <div class="module-box seam">jBPM</div>
+                            <div class="module-box seam">Faces</div>
+                            <div class="module-box invisible">nothing</div>
+                            <div class="module-box seam">Spring</div>
+                            <div class="module-box seam">JCR</div>
+                        </div>
+                    </div>
+                    <div class="invisible">
+                        <p style="margin-top: 30px;"><img src="img/codi.png" width="40"  style="border: none; background: none; box-shadow: none; margin: 0 10px 0 0; vertical-align: bottom" />MyFaces CODI</p>
+                        <div>
+                            <div class="module-box codi">Core</div>
+                            <div class="module-box codi">JSF</div>
+                            <div class="module-box codi">BV</div>
+                            <div class="module-box codi">JPA</div>
+                            <div class="module-box codi">Message</div>
+                        </div>
+                    </div>
+                    <div class="invisible">
+                        <p style="margin-top: 30px;">Other</p>
+                        <div>
+                            <div class="module-box other-framework">cdi-query</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-transition="none">
+                    <h2>Frameworks</h2>
+                    <div class="fragment">
+                        <p><img src="img/seam.png" width="45"  style="border: none; background: none; box-shadow: none; margin: 0 10px 0 0; vertical-align: bottom" />JBoss Seam 3</p>
+                        <div>
+                            <div class="module-box seam">Solder</div>
+                            <div class="module-box seam">Config</div>
+                            <div class="module-box seam">Catch</div>
+                            <div class="module-box seam">Security</div>
+                            <div class="module-box seam">Social</div>
+                            <div class="module-box seam">Mail</div>
+                            <div class="module-box seam">Transaction</div>
+                            <div class="module-box seam">Render</div>
+                            <div class="module-box seam">Cron</div>
+                            <div class="module-box seam">Reports</div>
+                            <div class="module-box seam">Remoting</div>
+                            <div class="module-box seam">Rest</div>
+                            <div class="module-box seam">JMS</div>
+                            <div class="module-box seam">Persistence</div>
+                            <div class="module-box seam">Validation</div>
+                            <div class="module-box seam">Servlet</div>
+                            <div class="module-box seam">Wicket</div>
+                            <div class="module-box seam">Drools</div>
+                            <div class="module-box seam">jBPM</div>
+                            <div class="module-box seam">Faces</div>
+                            <div class="module-box invisible">nothing</div>
+                            <div class="module-box seam">Spring</div>
+                            <div class="module-box seam">JCR</div>
+                        </div>
+                    </div>
+                    <div  class="fragment">
+                        <p style="margin-top: 30px;"><img src="img/codi.png" width="40"  style="border: none; background: none; box-shadow: none; margin: 0 10px 0 0; vertical-align: bottom" />MyFaces CODI</p>
+                        <div>
+                            <div class="module-box codi">Core</div>
+                            <div class="module-box codi">JSF</div>
+                            <div class="module-box codi">BV</div>
+                            <div class="module-box codi">JPA</div>
+                            <div class="module-box codi">Message</div>
+                        </div>
+                    </div>
+                    <div  class="fragment">
+                        <p style="margin-top: 30px;">Other</p>
+                        <div>
+                            <div class="module-box other-framework">cdi-query</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-transition="none">
+                    <h2><span style="color: #993377">&#9632;</span> DeltaSpike &amp; <span style="color: #333333">&#9632;</span> friends</h2>
+                    <div>
+                        <p style="opacity: 0.3"><img src="img/seam.png" width="45"  style="border: none; background: none; box-shadow: none; margin: 0 10px 0 0; vertical-align: bottom" />JBoss Seam 3</p>
+                        <div>
+                            <div class="module-box deltaspike">Core</div>
+                            <div class="module-box other-framework">Aries</div>
+                            <div class="module-box deltaspike">Core</div>
+                            <div class="module-box deltaspike">Security</div>
+                            <div class="module-box other-framework">Agorava</div>
+                            <div class="module-box invisible">Mail</div>
+                            <div class="module-box deltaspike">JPA</div>
+                            <div class="module-box invisible">Render</div>
+                            <div class="module-box deltaspike">Scheduler</div>
+                            <div class="module-box invisible">Reports</div>
+                            <div class="module-box invisible">Remoting</div>
+                            <div class="module-box other-framework">RestEasy</div>
+                            <div class="module-box other-framework">JMS 2.0</div>
+                            <div class="module-box other-framework">JTA 1.1</div>
+                            <div class="module-box deltaspike">beanval</div>
+                            <div class="module-box deltaspike">Servlet</div>
+                            <div class="module-box other-framework">Wicket</div>
+                            <div class="module-box other-framework">Drools</div>
+                            <div class="module-box invisible">jBPM</div>
+                            <div class="module-box deltaspike">JSF</div>
+                            <div class="module-box deltaspike">Test-Control</div>
+                            <div class="module-box deltaspike">PartialBean</div>
+                            <div class="module-box invisible">Spring</div>
+                            <div class="module-box other-framework">ModeShape</div>
+                            <div class="module-box invisible">spacer</div>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="opacity: 0.3; margin-top: 30px;"><img src="img/codi.png" width="40"  style="border: none; background: none; box-shadow: none; margin: 0 10px 0 0; vertical-align: bottom" />MyFaces CODI</p>
+                        <div>
+                            <div class="module-box deltaspike">Core</div>
+                            <div class="module-box deltaspike">JSF</div>
+                            <div class="module-box deltaspike">beanval</div>
+                            <div class="module-box deltaspike">JPA</div>
+                            <div class="module-box deltaspike">Core</div>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="opacity: 0.3; margin-top: 30px;">Other</p>
+                        <div>
+                            <div class="module-box deltaspike">Data</div>
+                        </div>
+                    </div>
                 </section>
 
             </div>
