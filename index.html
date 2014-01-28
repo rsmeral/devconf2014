@@ -55,9 +55,9 @@
                             <small><a href="http://github.com/rsmeral">@rsmeral</a></small><br />
                             <small>Seam QE at RH, student at FI MU</small>
                         </div>
-                    </div>
-                    <br />
-                    <div class="fragment" style="width: 500px; display: inline-block; text-align: left;">
+                    </div><!--
+                    --><br /><!--
+                    --><div class="fragment" style="width: 500px; display: inline-block; text-align: left;">
                         <img src="img/matous.jpg" style="float: left; margin-right:20px" width="100"/>
                         <div style="padding-top: 10px;">
                             Matouš Jobánek<br/>
@@ -65,7 +65,91 @@
                             <small>WFK QE at RH, GWT wiz</small>
                         </div>
                     </div>
+                </section>
 
+                <section>
+                    <section>
+                        <h1>CDI</h1>
+                    </section>
+
+                    <section>
+                        <h2>CDI</h2>
+                        <p>Contexts and Dependency Injection</p>
+                        <p class="fragment">Type-safe resolution, Scopes</p>
+                        <pre class="fragment" style="width: 98%; display: inline-block;"><code data-trim class="java">
+public class UserController {
+
+    @Inject @User
+    public Repository repo;
+</code></pre>
+                        <pre class="fragment" style="width: 49%; display: inline-block;"><code data-trim class="java">
+@SessionScoped @User
+class UserRepo implements Repository {
+
+...
+</code></pre>
+                        <pre class="fragment" style="width: 49%; display: inline-block;"><code data-trim class="java">
+class Repositories {
+
+    @Produces @SessionScoped @User
+    public Repository getUserRepo() {
+</code></pre>
+                    </section>
+
+                    <section>
+                        <h2>CDI</h2>
+                        <p>Interceptors</p>
+                        <pre class="fragment" style="width: 98%; display: inline-block;"><code data-trim class="java">
+public class Account {
+...
+    @Audited
+    public void changePassword(Credentials c) {
+
+...
+</code></pre>
+                        <pre class="fragment" style="width: 98%; display: inline-block;"><code data-trim class="java">
+@Interceptor @Audited
+public class AuditInterceptor {
+    
+    @AroundInvoke
+    public logOperation() {
+...
+</code></pre>
+                    </section>
+
+                    <section>
+                        <h2>CDI</h2>
+                        <p>Events</p>
+                        <pre class="fragment" style="width: 98%; display: inline-block;"><code data-trim class="java">
+public void updatePasswordExpiryDate(@Observes @Changed Credentials) {
+...
+</code></pre>
+                        <pre class="fragment" style="width: 98%; display: inline-block;"><code data-trim class="java">
+@Inject @Changed Event&lt;Credentials&gt; changeEvent;
+
+public changePassword(Credentials c) {
+    ...
+    changeEvent.fire(c);
+</code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>CDI extensions</h2>
+                    <p>SPI for integration with other technologies<br /><small>Seam, Spring, GWT, ...</small></p>
+                    <p class="fragment">ServiceLoader pattern<br /><small>META-INF/services</small></p>
+                    <p class="fragment">Custom scopes<br /><small><code>@PageScope, @BusinessProcessScope</code></small></p>
+                    <p class="fragment">Provide beans, augment existing beans</p>
+                    <p class="fragment">Catch system events for deployment phases<br /><small>before/after deployment, per bean, per injection point</small></p>
+                </section>
+                
+                <section>
+                    <h2>CDI extensions</h2>
+                    <p>SPI for integration with other technologies<br /><small>Seam, Spring, GWT, ...</small></p>
+                    <p class="fragment">ServiceLoader pattern<br /><small>META-INF/services</small></p>
+                    <p class="fragment">Custom scopes<br /><small><code>@PageScope, @BusinessProcessScope</code></small></p>
+                    <p class="fragment">Provide beans, augment existing beans</p>
+                    <p class="fragment">Catch system events for deployment phases<br /><small>before/after deployment, per bean, per injection point</small></p>
                 </section>
 
             </div>
