@@ -421,63 +421,6 @@ public changePassword(Credentials c) {
                 </section>
 
                 <section id="deltaspike-core-stack">
-                    <section id="ds-core-messages">
-                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title">Core</div>
-                        <div class="fragment">
-                            <p>Type-safe messages</p>
-                            <pre><code data-trim class="java">
-@MessageBundle
-public interface AppMessages {
-
-    @MessageTemplate("Hello, %s!")
-    String hello(String name);
-
-    @MessageTemplate("{greeting}")
-    String greet(String greeting, String name);
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <div class="code-annotation">AppMessages.properties</div>
-                            <pre><code data-trim>
-greeting=%s, %s!
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <div class="code-annotation">Usage</div>
-                            <pre><code data-trim class="java">
-@Inject AppMessages msg;
-...
-msg.greet("Hello", "DevConf");
-msg.hello("World");
-</code></pre>
-                        </div>
-
-                    </section>
-
-                    <section id="ds-core-projectstage-resources">
-                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title">Core</div>
-                        <div>
-                            <p>ProjectStage, conditional bean exclusion</p>
-                            <pre><code data-trim class="java">
-@Exclude(exceptIfProjectStage=IntegrationTest.class)
-public class TestUserRepository { ...
-</code></pre>
-                        </div>
-                        <div class="fragment">
-                            <p>Resource loading</p>
-                            <pre><code data-trim class="java">
-@Inject
-@ExternalResource("schedule.xml")
-private InputStream inputStream;
-
-@Inject
-@ExternalResource("api-keys.properties")
-private Properties apiKeys;
-</code></pre>
-                        </div>
-                    </section>
 
                     <section id="ds-core-exceptions">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
@@ -543,6 +486,63 @@ public class NastinessHandler {
 </code></pre>
                     </section>
 
+                    <section id="ds-core-messages">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">Core</div>
+                        <div class="fragment">
+                            <p>Type-safe messages</p>
+                            <pre><code data-trim class="java">
+@MessageBundle
+public interface AppMessages {
+
+    @MessageTemplate("Hello, %s!")
+    String hello(String name);
+
+    @MessageTemplate("{greeting}")
+    String greet(String greeting, String name);
+</code></pre>
+                        </div>
+                        <div class="fragment">
+                            <div class="code-annotation">AppMessages.properties</div>
+                            <pre><code data-trim>
+greeting=%s, %s!
+</code></pre>
+                        </div>
+                        <div class="fragment">
+                            <div class="code-annotation">Usage</div>
+                            <pre><code data-trim class="java">
+@Inject AppMessages msg;
+...
+msg.greet("Hello", "DevConf");
+msg.hello("World");
+</code></pre>
+                        </div>
+
+                    </section>
+
+                    <section id="ds-core-projectstage-resources">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">Core</div>
+                        <div>
+                            <p>ProjectStage, conditional bean exclusion</p>
+                            <pre><code data-trim class="java">
+@Exclude(exceptIfProjectStage=IntegrationTest.class)
+public class TestUserRepository { ...
+</code></pre>
+                        </div>
+                        <div class="fragment">
+                            <p>Resource loading</p>
+                            <pre><code data-trim class="java">
+@Inject
+@ExternalResource("schedule.xml")
+private InputStream inputStream;
+
+@Inject
+@ExternalResource("api-keys.properties")
+private Properties apiKeys;
+</code></pre>
+                        </div>
+                    </section>
 
                 </section>
 
