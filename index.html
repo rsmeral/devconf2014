@@ -555,6 +555,163 @@ private Properties apiKeys;
                     </section>
                 </section>
 
+
+		<section id="deltaspike-jsf-stack">
+
+                    <section id="ds-jsf-intro">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">JSF</div>
+			<p class="fragment">Type-safe view-configs</p>
+			<p class="fragment">Multiple meta-data inheritance</p>
+			<p class="fragment">Benefits from features of any modern Java IDE<br>
+			<small>auto-completion, checking typos, find usages, refactoring and maintenance, inheritance presentation</small></p>
+                    </section>
+
+                    <section id="ds-jsf-how">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">JSF</div>
+			<p>How it works?</p>
+			<div class="fragment">
+				<table width="1160px"><TR><TD width="820px" style="font-size:42px;">
+					<pre><code data-trim class="java">
+@Folder
+public interface Pages
+{
+	@View (name = "home")
+	class Index implements ViewConfig { }
+
+	@View (navigation = REDIRECT)
+	interface Admin extends ViewConfig
+	{
+	        @View
+	        class Index implements Admin { }
+	}
+}
+					</code></pre>
+				</TD><TD width="440px">
+					<p style="font-size:33px;">leads to the following paths:</p>
+						<code style="font-size:27px">
+							/pages/<br>	
+							/pages/home.xhtml<br>
+							/pages/admin/<br>
+							/pages/admin/index.xhtml<br>
+						</code>
+				</TD></TR>
+				</table>
+			</div>
+		</section>
+
+
+		<section data-transition="fade" id="ds-jsf-an-view">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">JSF - annotaion</div>
+			<div class="fragment">
+				<p>@View(#name, #basepath, #navigation, #viewparams)</p>
+				<br>
+				<div style="margin-left:-150px;">
+					<pre style="width: 1250px; font-size:25px;"><code data-trim class="java">
+@View(name = "home", basePath = "/w1/", navigation = REDIRECT, viewParams = INCLUDE)
+public class Index implements ViewConfig { }
+					</code></pre>
+				</div>
+			</div>
+		</section>
+
+		<section data-transition="fade" id="ds-jsf-an-folder">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">JSF - annotaion</div>
+			<p>@Folder(#name)</p>
+			<br>
+			<pre style="font-size:25px;"><code data-trim class="java">
+@Folder(name = "/admin/")
+public interface Pages implements ViewConfig { }
+			</code></pre>
+		</section>
+
+		<section data-transition="fade" id="ds-jsf-an-nav-par">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">JSF - annotaion</div>
+			<p>@NavigationParameter(#key, #value)</p>
+			<br>
+			<pre style="width: 1000px; font-size:25px;"><code data-trim class="java">
+@NavigationParameter(key = "param1", value = "staticValue1")
+public class Index implements ViewConfig { }
+			</code></pre>
+		</section>
+
+		<section data-transition="fade" id="ds-jsf-an-view-con-ref">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">JSF - annotaion</div>
+			<p>@ViewControllerRef(Controller.class)</p>
+			<br>
+				<pre style="font-size:25px;"><code data-trim class="java">
+@ViewControllerRef(MyPageController.class)
+public class MyPage implements ViewConfig { }
+
+@Model
+public class MyPageController
+{
+    @PreRenderView
+    protected void load()
+    {
+        //...
+    }
+}
+				</code></pre>
+			<p style="font-size:30px;">@InitView, @PreViewAction, @PreRenderView and @PostRenderView</p>
+		</section>
+
+		<section data-transition="fade" id="ds-jsf-an-view-ref">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">JSF - annotaion</div>
+			<p>@ViewRef(#viewConfig)</p>
+			<br>
+			<div>
+				<pre style="font-size:25px;"><code style="min-height:430px;" data-trim class="java">
+public interface Pages extends ViewConfig
+{
+    class Index implements Pages { }
+}
+
+@ViewRef(Pages.Index.class)
+public class IndexController implements Serializable
+{
+    @PreRenderView
+    protected void preRenderView()
+    {
+        //...
+    }
+}
+				</code></pre>
+			</div>
+		</section>
+
+		<section data-transition="fade" id="ds-jsf-an-secure">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">JSF - annotaion</div>
+			<p>@Secured(AccessDecisionVoter.class)</p>
+			<br>
+			<div>
+				<pre style="font-size:25px;"><code data-trim class="java">
+@Secured(UserAccessDecisionVoter.class)
+public interface Pages extends ViewConfig
+{
+	class Index implements Pages { }
+
+	@Secured(AdminAccessDecisionVoter.class)	
+	interface Admin extends Pages
+	{
+	        	class Manage implements Admin { }	
+	
+	        	class Home implements Admin { }
+	}
+}
+					</code></pre>
+			</div>
+		</section>
+	</section>
+
+
                 <!-- FINAL SLIDES -->
 
                 <section id="final-questions">
