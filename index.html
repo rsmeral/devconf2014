@@ -93,7 +93,6 @@
                 margin-top: 25px;
             }
 
-
         </style>
     </head>
 
@@ -635,12 +634,112 @@ class UserNameValidator implements ConstraintValidator&lt;NotTaken, String&gt; {
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
 
                         <div class="module-box deltaspike title">Data</div>
+                        <br />
+                        <pre style="font-size: 0.2em; display: inline-block; width: 49%; overflow: hidden; letter-spacing: 0.05em" class="fragment ds-zoom-in" id="ds-data-frag-jdbc"><code style="overflow: hidden" data-trim class="java">
+public class PersonRepository {
 
-                        <pre><code data-trim class="java">
-JDBC example
+    private Connection conn;
+
+    private static final String BY_ID = "SELECT * FROM Person WHERE id = ?";
+    private static final String BY_NAME = "SELECT * FROM Person WHERE firstName LIKE ? AND lastName LIKE ?'";
+    private static final String STORE = "INSERT INTO Person(firstName,lastName,birthDate) VALUES(?,?,?)";
+    private static final String UPDATE = "UPDATE Person SET firstName = ?, lastName = ?, birthDate = ?";
+    private static final String REMOVE = "DELETE FROM Person WHERE id = ?";
+    
+    private PreparedStatement findByIdStmt;
+    private PreparedStatement findByNameStmt;
+    private PreparedStatement storeStmt;
+    private PreparedStatement updateStmt;
+    private PreparedStatement removeStmt;
+
+    public PersonRepository() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/people", "user", "pass");
+            findByIdStmt = conn.prepareStatement(BY_ID);
+            findByNameStmt = conn.prepareStatement(BY_NAME);
+            storeStmt = conn.prepareStatement(STORE);
+            updateStmt = conn.prepareStatement(UPDATE);
+            removeStmt = conn.prepareStatement(REMOVE);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PersonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Person find(Long id) {
+        try {
+            findByIdStmt.setLong(1, id);
+            ResultSet rs = findByIdStmt.executeQuery();
+            if (rs.next()) {
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+                Date birthDate = new Date(rs.getDate("birthDate").getTime());
+                return new Person(firstName, lastName, birthDate);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public List&lt;Person&gt; findByName(String first, String last) {
+        try {
+            findByNameStmt.setString(1, "%" + first + "%");
+            findByNameStmt.setString(1, "%" + last + "%");
+            ResultSet rs = findByNameStmt.executeQuery();
+            List&lt;Person&gt; people = new ArrayList&lt;Person&gt;();
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+                Date birthDate = new Date(rs.getDate("birthDate").getTime());
+                people.add(new Person(id, firstName, lastName, birthDate));
+            }
+            return people;
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Long store(Person p) {
+        try {
+            storeStmt.setString(1, p.getFirstName());
+            storeStmt.setString(2, p.getLastName());
+            storeStmt.setDate(3, new java.sql.Date(p.getBirthDate().getTime()));
+            storeStmt.executeUpdate();
+            return storeStmt.getGeneratedKeys().getLong(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void update(Person p) {
+        try {
+            updateStmt.setString(1, p.getFirstName());
+            updateStmt.setString(2, p.getLastName());
+            updateStmt.setDate(3, new java.sql.Date(p.getBirthDate().getTime()));
+            updateStmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void remove(Person p) {
+        try {
+            removeStmt.setLong(1, p.getId());
+            removeStmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
 </code></pre>
-
-                        <pre><code data-trim class="java">
+                        <div style="display: none" class="fragment ds-zoom-out"></div>
+                        <pre style="display: inline-block; width: 49%; font-size: 0.4em; vertical-align: top" class="fragment ds-zoom-in" id="ds-data-frag-jpa"><code style="overflow: hidden" data-trim class="java">
 @Stateful
 @ConversationScoped
 public class PersonRepository {
@@ -668,8 +767,9 @@ public class PersonRepository {
     }
 }
 </code></pre>
+                        <div style="display: none" class="fragment ds-zoom-out"></div>
 
-                        <pre><code data-trim class="java">
+                        <pre style="width: 99%; margin-top: 0; font-size: 0.7em" class="fragment ds-zoom-out" id="ds-data-frag-ds"><code data-trim class="java">
 @Repository
 public interface PersonRepository 
 extends EntityRepository&lt;Person, Long&gt; {}
@@ -1331,7 +1431,15 @@ public Tweet sendTweet(String msg) {
                         }}
                 ]
             });
-
+            
+            Reveal.addEventListener( 'fragmentshown', function( event ) {
+                if(event.fragment.classList.contains("ds-zoom-in")) {
+                    zoom.to({element: event.fragment});
+                }
+                if(event.fragment.classList.contains("ds-zoom-out")) {
+                    zoom.out();
+                }
+            } );
         </script>
 
     </body>
