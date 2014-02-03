@@ -1057,10 +1057,9 @@ public interface Pages extends ViewConfig
                 <section id="agorava-stack">
 
                     <section id="agorava-intro">
-                        <h2 style="margin: 0; padding: 0">Agorava</h2>
-                        <br />
-                        <!--<p class="fragment">Type-safe view-configs</p>-->
-                        <div style="text-align: left; display: inline-block; vertical-align: top; margin-top: 10px">
+                        <h2 class="fragment" style="margin: 0; padding: 0">Agorava<img src="img/agoravaLogo.png" style="margin: 0px 0px -10px 50px; border:0px; background:transparent; box-shadow: 0 0 0;" width="100"/></h2>
+			<br />
+			<div style="text-align: left; display: inline-block; vertical-align: top; margin-top: 10px">
                             <div>
                                 <h3 style="display:inline" class="fragment">What?</h3>
                                 <p style="display: inline-block; vertical-align: top" class="fragment">CDI extension framework</p>
@@ -1068,7 +1067,7 @@ public interface Pages extends ViewConfig
                             <br/>
                             <div>
                                 <h3 style="display:inline" class="fragment">Why?</h3>
-                                <p style="display: inline-block; vertical-align: top" class="fragment">To deal with Social Media <br/> based on OAuth 1.0a and OAuth 2.0</p>
+                                <p style="display: inline-block; vertical-align: top" class="fragment">To deal with Social Media based on OAuth</p>
                             </div>
                             <br/>
                             <div>
@@ -1081,9 +1080,98 @@ public interface Pages extends ViewConfig
                                 <p style="display: inline-block; vertical-align: top" class="fragment">now: 0.7.0<br /><i>soon:</i> 1.0</p>
                             </div>
                         </div>
-
                     </section>
-                </section>
+
+		<section id="agorava-provides">
+                        <h2 style="margin: 0; padding: 0">Agorava - What is on menu?</h2>
+			<br />
+			<p class="fragment">A generic API to deal with OAuth 1.0a and 2.0 services</p>
+			<p class="fragment">API to retrieve basic user information from a Social Service</p>
+			<p class="fragment">Specific API for Twitter<img src="img/Twitter.png"  style="margin: 0px 0px -2px 3px; border:0px;" width="30"/>, Facebook<img src="img/Facebook.png" style="margin: 0px 0px -2px 3px; border:0px;" width="30"/> and LinkedIn<img src="img/LinkedIn.png" style="margin: 0px 0px -2px 3px; border:0px;" width="30"/></p>
+			<p class="fragment">SPI to extend Agorava with a new module for a new services</p>
+			<p class="fragment">many more ...</p>
+		</section>
+
+		<section id="agorava-how-settings">
+                        <h2 style="margin: 0; padding: 0">Agorava - How?</h2>
+			<br />
+			<p class="fragment">Declare your OAuth application on the Social Media web site</p>
+			<p class="fragment">Get OAuth app keys</p>
+			<div class="fragment" style="margin-left:-30px;">
+				<p>... and produce it with a CDI producer:</p>
+				<pre style="font-size:25px; width:1020px;"><code data-trim class="java">
+@ApplicationScoped
+@Produces
+@Twitter
+@OAuthApplication(params = {@Param(name = PREFIX, value = "twitter")})
+public OAuthAppSettings twitterSettings;
+				</code></pre>
+				<br />
+				<p style="font-size:28px; text-align:left;">agorava.properties :</p>
+				<pre style="font-size:25px; margin-left:0px;"><code data-trim class="java">
+twitter.apiKey = your_key
+twitter.apiSecret = your_secret_key
+				</code></pre>
+			</div>
+			
+		</section>
+
+		<section id="agorava-how-dance">
+                        <h2 style="margin: 0; padding: 0">Agorava - How?</h2>
+			<br />
+			<p>How to authorize?</p>
+			<div class="fragment" style="margin-left:-30px;">
+				<pre style="font-size:25px; width:1020px;"><code data-trim class="java">
+@Inject
+OAuthLifeCycleService lifeCycleService;
+
+String authURL = lifeCycelService.startDanceFor(Twitter.class);
+				</code></pre>
+			</div>
+			
+		</section>
+
+		<section id="agorava-how-time">
+                        <h2 style="margin: 0; padding: 0">Agorava - How?</h2>
+			<br />
+			<p>Work with user info?</p>
+			<div class="fragment" style="margin-left:-30px;">
+				<pre style="font-size:25px; width:1020px;"><code data-trim class="java">
+@Inject
+@Twitter
+TwitterUserService userService;
+
+public void handleUserInfo()
+    {
+	userService.getProfileId();
+	userService.getScreenName();
+	//...
+    }
+				</code></pre>
+			</div>
+			
+		</section>
+
+		<section id="agorava-how-time">
+                        <h2 style="margin: 0; padding: 0">Agorava - How?</h2>
+			<br />
+			<p>Send tweet?</p>
+			<div class="fragment" style="margin-left:-30px;">
+				<pre style="font-size:25px; width:1020px;"><code data-trim class="java">
+@Inject
+@Twitter
+TwitterTimelineService tl;
+
+ public Tweet sendTweet(String msg)
+    {
+      return tl.updateStatus(msg);
+    }
+				</code></pre>
+			</div>
+			
+		</section>
+
+	</section>
 
                 <!-- FINAL SLIDES -->
 
