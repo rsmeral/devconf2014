@@ -45,6 +45,10 @@
                 background: #333333 !important;
             }
 
+            div.inactive {
+                opacity: 0.25;
+            }
+
             div.module-box {
                 display: inline-block;
                 font-size: 0.6em;
@@ -375,7 +379,7 @@ public changePassword(Credentials c) {
                             <div class="module-box invisible">spacer</div>
                             <div class="module-box invisible">spacer</div>
                         </div>
-                        <div style="text-align: left; display: inline-block; vertical-align: top; margin-top: 10px">
+                        <div style="width: 600px; text-align: left; display: inline-block; vertical-align: top; margin-top: 10px">
                             <div>
                                 <h3 style="display:inline" class="fragment">What?</h3>
                                 <p style="display: inline-block; vertical-align: top" class="fragment">CDI extension framework</p>
@@ -401,22 +405,39 @@ public changePassword(Credentials c) {
 
                 <section data-transition="fade" id="deltaspike-modules-intro">
                     <h2>DeltaSpike</h2>
+                    <div style="width: 200px; display: inline-block">
+                        <div class="module-box deltaspike">Core</div>
+                        <div class="module-box deltaspike">Data</div>
+                        <div class="module-box deltaspike">JPA</div>
+                        <div class="module-box deltaspike">BeanVal</div>
+                        <div class="module-box deltaspike">Partial Bean</div>
+                        <div class="module-box deltaspike">Scheduler</div>
+                        <div class="module-box deltaspike">Test Control</div>
+                        <div class="module-box deltaspike">Servlet</div>
+                        <div class="module-box deltaspike">JSF</div>
+                        <div class="module-box deltaspike">Security</div>
+                        <div class="module-box other-framework">Agorava</div>
+                        <div class="module-box other-framework">PicketLink</div>
+                    </div>
+                </section>
+
+                <section data-transition="fade" id="deltaspike-modules-allocation-ron">
+                    <h2>DeltaSpike</h2>
                     <div>
                         <div style="width: 200px; display: inline-block">
                             <div class="module-box deltaspike">Core</div>
                             <div class="module-box deltaspike">Data</div>
-                            <div class="module-box deltaspike">JPA</div>
+                            <div class="module-box deltaspike inactive">JPA</div>
                             <div class="module-box deltaspike">BeanVal</div>
                             <div class="module-box deltaspike">Partial Bean</div>
                             <div class="module-box deltaspike">Scheduler</div>
-                            <div class="module-box deltaspike">Test Control</div>
-                            <div class="module-box deltaspike">Servlet</div>
-                            <div class="module-box deltaspike">JSF</div>
-                            <div class="module-box deltaspike">Security</div>
-                            <div class="module-box invisible">spacer</div>
-                            <div class="module-box invisible">spacer</div>
+                            <div class="module-box deltaspike inactive">Test Control</div>
+                            <div class="module-box deltaspike inactive">Servlet</div>
+                            <div class="module-box deltaspike inactive">JSF</div>
+                            <div class="module-box deltaspike inactive">Security</div>
+                            <div class="module-box other-framework inactive">Agorava</div>
+                            <div class="module-box other-framework inactive">PicketLink</div>
                         </div>
-
                     </div>
                 </section>
 
@@ -552,7 +573,187 @@ private Properties apiKeys;
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Data</div>
 
+                        <pre><code data-trim class="java">
+JDBC example
+</code></pre>
+
+                        <pre><code data-trim class="java">
+@Stateful
+@ConversationScoped
+public class EmployeeRepository {
+   
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
+    private EntityManager em;
+
+    public void persist(Employee e) {
+        em.persist(e);
+        em.flush();
+    }
+
+    public void remove(Employee e) {
+        em.remove(e);
+        em.flush();
+    }
+
+    public List&lt;Employee&gt; getAllEmployees() {
+        return em.createQuery("SELECT e FROM Employee e").getResultList();
+    }
+
+    public List&lt;Employee&gt; findByName(String name) {
+        return em.createQuery("SELECT e From Employee e WHERE e.name LIKE :name")
+                 .setParameter("name", name).getResultList();
+    }
+}
+</code></pre>
+
+                        <pre><code data-trim class="java">
+@Repository
+public interface EmployeeRepository 
+extends EntityRepository&lt;Employee, Long&gt; {}
+</code></pre>           
                     </section>
+
+                    <section id="ds-data-features">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">Data</div>
+                        <div>
+                            <p>Query as annotation</p>
+                            <pre><code data-trim class="java">
+@Query("SELECT e from Employee e where e.birthDate = ?1")
+Person findByBirthDate(Date d);
+</code></pre>
+                        </div>
+
+                        <div class="fragment">
+                            <p>Method name DSL</p>
+                            <pre><code data-trim class="java">
+List&lt;Person&gt; findByNameLikeAndAgeBetweenAndGender(
+    String name, int minAge, int maxAge, Gender gender);
+</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="ds-data-features-more">
+                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                        <div class="module-box deltaspike title">Data</div>
+                        <div class="fragment">
+                            <p>Auditing API</p>
+                            <pre><code data-trim class="java">
+@ModifiedOn
+@Temporal(TemporalType.TIMESTAMP)
+private Date updated;
+
+@ModifiedBy
+private String auditUser;
+</code></pre>
+                        </div>
+
+                        <div class="fragment">
+                            <p>Criteria API support</p>
+                            <p>Query Delegate &ndash; custom DSL</p>
+                            <p>DTO mapping</p>
+                            <p>Pagination</p>
+                            <p>...</p>
+                        </div>
+                    </section>
+
+                </section>
+
+                <!--                <section id="deltaspike-jpa">
+                                    
+                                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                                        <div class="module-box deltaspike title">JPA</div>
+                
+                                </section>-->
+
+                <section id="deltaspike-beanval">
+
+                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                    <div class="module-box deltaspike title">BeanVal</div>
+
+                </section>
+
+                <section id="deltaspike-partialbean">
+
+                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                    <div class="module-box deltaspike title">Partial Bean</div>
+
+                </section>
+
+                <section id="deltaspike-scheduler">
+
+                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                    <div class="module-box deltaspike title">Scheduler</div>
+
+
+                </section>
+
+
+                <!-- Matous -->
+
+                <section data-transition="fade" id="deltaspike-modules-allocation-matous">
+                    <h2>DeltaSpike</h2>
+                    <div>
+                        <div style="width: 200px; display: inline-block">
+                            <div class="module-box deltaspike inactive">Core</div>
+                            <div class="module-box deltaspike inactive">Data</div>
+                            <div class="module-box deltaspike inactive">JPA</div>
+                            <div class="module-box deltaspike inactive">BeanVal</div>
+                            <div class="module-box deltaspike inactive">Partial Bean</div>
+                            <div class="module-box deltaspike inactive">Scheduler</div>
+                            <div class="module-box deltaspike inactive">Test Control</div>
+                            <div class="module-box deltaspike inactive">Servlet</div>
+                            <div class="module-box deltaspike">JSF</div>
+                            <div class="module-box deltaspike">Security</div>
+                            <div class="module-box other-framework">Agorava</div>
+                            <div class="module-box other-framework">PicketLink</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="deltaspike-jsf">
+
+                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                    <div class="module-box deltaspike title">JSF</div>
+
+
+                </section>
+
+                <section id="deltaspike-security">
+
+                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                    <div class="module-box deltaspike title">Security</div>
+
+
+                </section>
+
+                <section id="deltaspike-security-picketlink">
+
+                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                    <div class="module-box deltaspike title">Security</div> + <div class="module-box other-framework title">PicketLink</div>
+
+
+                </section>
+
+                <section id="deltaspike-security-picketlink">
+
+                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                    <div class="module-box deltaspike title">JSF</div> + <div class="module-box deltaspike title">Security</div> + <div class="module-box other-framework title">PicketLink</div>
+
+
+                </section>
+
+                <section id="agorava">
+
+                    <h2>Agorava</h2>
+
+                </section>
+
+                <section id="agorava-scheduler-twitter-demo">
+
+                    <h2>Demo time</h2>
+                    <!-- AJAX polling or websocket served feed of twitter timeline for @rsmeral #devconf 
+                         Server side does DS-Scheduler initiated Agorava-backed poll of twitter timeline -->
                 </section>
 
                 <!-- FINAL SLIDES -->
