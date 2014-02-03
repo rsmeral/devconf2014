@@ -592,27 +592,27 @@ JDBC example
                         <pre><code data-trim class="java">
 @Stateful
 @ConversationScoped
-public class EmployeeRepository {
+public class PersonRepository {
    
     @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
-    public void persist(Employee e) {
-        em.persist(e);
+    public void persist(Person p) {
+        em.persist(p);
         em.flush();
     }
 
-    public void remove(Employee e) {
-        em.remove(e);
+    public void remove(Person p) {
+        em.remove(p);
         em.flush();
     }
 
-    public List&lt;Employee&gt; getAllEmployees() {
-        return em.createQuery("SELECT e FROM Employee e").getResultList();
+    public List&lt;Person&gt; getAllPeople() {
+        return em.createQuery("SELECT p FROM Person p").getResultList();
     }
 
-    public List&lt;Employee&gt; findByName(String name) {
-        return em.createQuery("SELECT e From Employee e WHERE e.name LIKE :name")
+    public List&lt;Person&gt; findByName(String name) {
+        return em.createQuery("SELECT p From Person p WHERE p.name LIKE :name")
                  .setParameter("name", name).getResultList();
     }
 }
@@ -620,8 +620,8 @@ public class EmployeeRepository {
 
                         <pre><code data-trim class="java">
 @Repository
-public interface EmployeeRepository 
-extends EntityRepository&lt;Employee, Long&gt; {}
+public interface PersonRepository 
+extends EntityRepository&lt;Person, Long&gt; {}
 </code></pre>           
                     </section>
 
@@ -631,7 +631,7 @@ extends EntityRepository&lt;Employee, Long&gt; {}
                         <div>
                             <p>Query as annotation</p>
                             <pre><code data-trim class="java">
-@Query("SELECT e from Employee e where e.birthDate = ?1")
+@Query("SELECT p from Person p where p.birthDate = ?1")
 Person findByBirthDate(Date d);
 </code></pre>
                         </div>
@@ -682,6 +682,55 @@ private String auditUser;
 
                     <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                     <div class="module-box deltaspike title">BeanVal</div>
+                    <p>CDI in bean validators</p>
+                    <pre style="position: absolute; width: 100%" class="fragment" data-fragment-index="1"><code data-trim class="java">
+class RegistrationAction {
+
+
+    String chosenName;
+    
+    void register() {
+        ...
+    }
+}
+</code></pre>
+
+                    <pre style="position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="2"><code data-trim class="java">
+class RegistrationAction {
+
+    @NotTaken
+    String chosenName;
+    
+    void register() {
+        ...
+    }
+}
+</code></pre>
+
+                    <pre style="visibility: hidden; margin: 0; width: 100%"><code class="java">
+
+
+
+
+    
+
+
+
+
+</code></pre>
+
+                    <pre class="fragment" style="width: 100%" data-fragment-index="2"><code data-trim class="java">
+class UserNameValidator implements ConstraintValidator&lt;NotTaken, String&gt; {
+
+    @Inject
+    UserRepository userRepo;
+
+    boolean isValid(String s, ConstraintValidatorContext cvc) {
+        return userRepo.findByName(s) == null;
+    }
+}
+</code></pre>
+
 
                 </section>
 
@@ -689,7 +738,10 @@ private String auditUser;
 
                     <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                     <div class="module-box deltaspike title">Partial Bean</div>
+                    
+                    <pre class="fragment"><code data-trim class="java">
 
+</code></pre>
                 </section>
 
                 <section id="deltaspike-scheduler">
