@@ -794,11 +794,13 @@ class UserNameValidator implements ConstraintValidator&lt;NotTaken, String&gt; {
                                         <pre><code data-trim class="java">
 @Folder
 public interface Pages {
-    @View (name = "home")
+
+    @View(name = "home")
     class Index implements ViewConfig { }
 
     @Folder
     interface Admin extends ViewConfig {
+
         @View
         class Index implements Admin { }
     }
@@ -848,19 +850,22 @@ public interface Pages {
 
                     <section id="ds-jsf-an-nav-par">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title jsf_annotation">JSF &ndash; annotation</div>
+                        <div class="module-box deltaspike title jsf_annotation">JSF</div>
                         <p>Navigation</p>
                         <div style="margin-left:-150px;" class="fragment">
-                            <pre style="width: 1200px; font-size:25px;"><code data-trim class="java">
+                            <pre style="width: 1200px; font-size:25px;"><code style="min-height: 450px" data-trim class="java">
 @Model
 public interface Pages extends ViewConfig {
-    class Index implements Pages { 
+
+    class Index implements Pages {
+
             @NavigationParameter(key = "param", value = "#{myBean.property}")
             public Class&lt;? extends ViewConfig&gt; actionMethod() {
+
                     return Pages.Home.class;
             }
     }
-    
+
     @View(navigation = REDIRECT, viewParams = INCLUDE)
     class Home implements Pages { }
 }</code></pre>
@@ -869,7 +874,7 @@ public interface Pages extends ViewConfig {
 
                     <section id="ds-jsf-an-view-con-ref">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title jsf_annotation">JSF &ndash; annotation</div>
+                        <div class="module-box deltaspike title jsf_annotation">JSF</div>
                         <p>View-Controller Callbacks via @ViewControllerRef</p>
                         <br>
                         <div class="fragment">
@@ -882,6 +887,7 @@ public class MyPage implements ViewConfig { }
 
 @Model
 public class MyPageController {
+
     @PreRenderView
     protected void load() {
         //...
@@ -929,7 +935,7 @@ public class MyPageController {
 
                     <section id="ds-security-an-bind">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title security_annotation">Security - annotation</div>
+                        <div class="module-box deltaspike title security_annotation">Security</div>
                         <p>@SecurityBindingType</p>
                         <br>
                         <div class="fragment">
@@ -946,26 +952,26 @@ public @interface CustomSecurityBinding {
 
                     <section id="ds-security-an-bind-auth">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title security_annotation">Security - annotation</div>
+                        <div class="module-box deltaspike title security_annotation">Security</div>
                         <p>@CustomSecurityBinding</p>
                         <div class="fragment">
                             <pre style="font-size:25px;"><code data-trim class="java">
 @CustomSecurityBinding
-public void doSomething(Thing thing)
-{
+public void doSomething(Thing thing) {
+
     thing.doSomething();
 }
                     </code></pre>
                         </div>
                         <br>
-                        <div class="fragment" style="margin-left:-200px;">
+                        <div class="fragment" style="margin-left:-50px;">
                             <p>+ @Secures</p>
-                            <pre style="width: 1350px; font-size:25px;"><code data-trim class="java">
+                            <pre style="width: 1060px; font-size:25px;"><code data-trim class="java">
 @Secures
 @CustomSecurityBinding
-public boolean doSecuredCheck(InvocationContext invCont, BeanManager bm, @LoggedIn User user)
-throws Exception 
-{
+public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
+    throws Exception {
+
     return user.isLoggedIn(); // perform security check
 }
                     </code></pre>
@@ -1004,24 +1010,24 @@ throws Exception
 
                     <section id="ds-security-an-param">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title security_annotation">Security - annotation</div>
+                        <div class="module-box deltaspike title security_annotation">Security</div>
                         <p>@Secured(AccessDecisionVoter.class)</p>
                         <br>
                         <div class="fragment">
                             <pre style="font-size:25px;"><code data-trim class="java">
 @Secured(CustomAccessDecisionVoter.class)
-public class SecuredBean
-{
+public class SecuredBean {
+
     //...
 }
                 </code></pre>
                             <div class="fragment">
                                 <pre style="font-size:25px;"><code data-trim class="java">
-public class Bean
-{
+public class Bean {
+
     @Secured(CustomAccessDecisionVoter.class)
-    public String securedMethod()
-    {
+    public String securedMethod() {
+
         //...
     }
 }
@@ -1037,15 +1043,15 @@ public class Bean
                         <div class="fragment">
                             <pre style="font-size:25px;"><code data-trim class="java">
 @Secured(UserAccessDecisionVoter.class)
-public interface Pages extends ViewConfig
-{
+public interface Pages extends ViewConfig {
+
     class Index implements Pages { }
 
     @Secured(AdminAccessDecisionVoter.class)    
-    interface Admin extends Pages
-    {
-                class Manage implements Admin { }    
-    
+    interface Admin extends Pages {
+
+                class Manage implements Admin { }
+
                 class Home implements Admin { }
     }
 }
@@ -1057,7 +1063,7 @@ public interface Pages extends ViewConfig
                 <section id="agorava-stack">
 
                     <section id="agorava-intro">
-                        <h2 class="fragment" style="margin: 0; padding: 0">Agorava<img src="img/agoravaLogo.png" style="margin: 0px 0px -10px 50px; border:0px; background:transparent; box-shadow: 0 0 0;" width="100"/></h2>
+                        <h2 style="margin: 0; padding: 0">Agorava<img src="img/agoravaLogo.png" style="margin: 0px 0px -10px 50px; border:0px; background:transparent; box-shadow: 0 0 0;" width="100"/></h2>
 			<br />
 			<div style="text-align: left; display: inline-block; vertical-align: top; margin-top: 10px">
                             <div>
@@ -1083,23 +1089,23 @@ public interface Pages extends ViewConfig
                     </section>
 
 		<section id="agorava-provides">
-                        <h2 style="margin: 0; padding: 0">Agorava - What is on menu?</h2>
+                        <h2 style="margin: 0; padding: 0">Agorava - What is on the menu?</h2>
 			<br />
 			<p class="fragment">A generic API to deal with OAuth 1.0a and 2.0 services</p>
 			<p class="fragment">API to retrieve basic user information from a Social Service</p>
 			<p class="fragment">Specific API for Twitter<img src="img/Twitter.png"  style="margin: 0px 0px -2px 3px; border:0px;" width="30"/>, Facebook<img src="img/Facebook.png" style="margin: 0px 0px -2px 3px; border:0px;" width="30"/> and LinkedIn<img src="img/LinkedIn.png" style="margin: 0px 0px -2px 3px; border:0px;" width="30"/></p>
 			<p class="fragment">SPI to extend Agorava with a new module for a new services</p>
-			<p class="fragment">many more ...</p>
+			<p class="fragment">and many more ...</p>
 		</section>
 
 		<section id="agorava-how-settings">
                         <h2 style="margin: 0; padding: 0">Agorava - How?</h2>
 			<br />
-			<p class="fragment">Declare your OAuth application on the Social Media web site</p>
-			<p class="fragment">Get OAuth app keys</p>
+			<p class="fragment">1. Declare your OAuth application on the Social Media web site</p>
+			<p class="fragment">2. Get OAuth app keys</p>
 			<div class="fragment" style="margin-left:-30px;">
-				<p>... and produce it with a CDI producer:</p>
-				<pre style="font-size:25px; width:1020px;"><code data-trim class="java">
+				<p>3. Produce it with a CDI producer:</p>
+				<pre style="font-size:25px; width:1025px;"><code data-trim class="java">
 @ApplicationScoped
 @Produces
 @Twitter
@@ -1117,7 +1123,7 @@ twitter.apiSecret = your_secret_key
 		</section>
 
 		<section id="agorava-how-dance">
-                        <h2 style="margin: 0; padding: 0">Agorava - How?</h2>
+                        <h2 style="margin: 0; padding: 0">Agorava</h2>
 			<br />
 			<p>How to authorize?</p>
 			<div class="fragment" style="margin-left:-30px;">
@@ -1132,20 +1138,20 @@ String authURL = lifeCycelService.startDanceFor(Twitter.class);
 		</section>
 
 		<section id="agorava-how-time">
-                        <h2 style="margin: 0; padding: 0">Agorava - How?</h2>
+                        <h2 style="margin: 0; padding: 0">Agorava</h2>
 			<br />
-			<p>Work with user info?</p>
+			<p>Wanna work with an user's info?</p>
 			<div class="fragment" style="margin-left:-30px;">
 				<pre style="font-size:25px; width:1020px;"><code data-trim class="java">
 @Inject
 @Twitter
 TwitterUserService userService;
 
-public void handleUserInfo()
-    {
-	userService.getProfileId();
-	userService.getScreenName();
-	//...
+public void handleUserInfo() {
+
+        userService.getProfileId();
+        userService.getScreenName();
+        //...
     }
 				</code></pre>
 			</div>
@@ -1153,7 +1159,7 @@ public void handleUserInfo()
 		</section>
 
 		<section id="agorava-how-time">
-                        <h2 style="margin: 0; padding: 0">Agorava - How?</h2>
+                        <h2 style="margin: 0; padding: 0">Agorava</h2>
 			<br />
 			<p>Send tweet?</p>
 			<div class="fragment" style="margin-left:-30px;">
@@ -1162,9 +1168,9 @@ public void handleUserInfo()
 @Twitter
 TwitterTimelineService tl;
 
- public Tweet sendTweet(String msg)
-    {
-      return tl.updateStatus(msg);
+public Tweet sendTweet(String msg) {
+
+        return tl.updateStatus(msg);
     }
 				</code></pre>
 			</div>
