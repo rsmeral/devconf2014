@@ -64,6 +64,9 @@
             }
 
             div.module-box.title {
+                display: inline-block;
+                margin-left: auto;
+                margin-right: auto;
                 margin-bottom: 25px;
             }
 
@@ -82,13 +85,15 @@
 
             pre.code-overlay {
                 box-shadow: none;
+                position: absolute;
+                width: 100%;
             }
 
             pre[class~=code-overlay] + pre:not([class~=code-overlay]) {
                 margin-top: 25px;
             }
 
-            div.jsf_annotation {
+/*            div.jsf_annotation {
                 width: auto;
                 padding-left: 15px;
                 padding-right: 15px;
@@ -98,7 +103,7 @@
                 width: auto;
                 padding-left: 15px;
                 padding-right: 15px;
-            }
+            }*/
 
         </style>
     </head>
@@ -491,7 +496,7 @@ try {
 }
 </code></pre>
                         <!-- overlay helper spacer -->
-                        <pre style="width: 100%; visibility: hidden" class="code-overlay">
+                        <pre style="width: 100%; visibility: hidden">
 <code class="java">
 
 
@@ -579,10 +584,67 @@ private Properties apiKeys;
 
                 </section>
 
+                <section id="deltaspike-beanval">
+
+                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+                    <div class="module-box deltaspike title">BeanVal</div>
+                    <p>CDI in bean validators</p>
+                    <pre style="position: absolute; width: 100%" class="fragment" data-fragment-index="1"><code data-trim class="java">
+class RegistrationAction {
+
+
+    String chosenName;
+    
+    void register() {
+        ...
+    }
+}
+</code></pre>
+
+                    <pre style="position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="2"><code data-trim class="java">
+class RegistrationAction {
+
+    @NotTaken
+    String chosenName;
+    
+    void register() {
+        ...
+    }
+}
+</code></pre>
+
+                    <pre style="visibility: hidden; margin: 0; width: 100%"><code class="java">
+
+
+
+
+    
+
+
+
+
+</code></pre>
+
+                    <pre class="fragment" style="width: 100%" data-fragment-index="2"><code data-trim class="java">
+class UserNameValidator implements ConstraintValidator&lt;NotTaken, String&gt; {
+
+    @Inject
+    UserRepository userRepo;
+
+    boolean isValid(String s, ConstraintValidatorContext cvc) {
+        return userRepo.findByName(s) == null;
+    }
+}
+</code></pre>
+
+
+                </section>
+
                 <section id="deltaspike-data-stack">
 
                     <section id="ds-data-intro">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
+
                         <div class="module-box deltaspike title">Data</div>
 
                         <pre><code data-trim class="java">
@@ -678,69 +740,54 @@ private String auditUser;
                 
                                 </section>-->
 
-                <section id="deltaspike-beanval">
-
-                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                    <div class="module-box deltaspike title">BeanVal</div>
-                    <p>CDI in bean validators</p>
-                    <pre style="position: absolute; width: 100%" class="fragment" data-fragment-index="1"><code data-trim class="java">
-class RegistrationAction {
-
-
-    String chosenName;
-    
-    void register() {
-        ...
-    }
-}
-</code></pre>
-
-                    <pre style="position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="2"><code data-trim class="java">
-class RegistrationAction {
-
-    @NotTaken
-    String chosenName;
-    
-    void register() {
-        ...
-    }
-}
-</code></pre>
-
-                    <pre style="visibility: hidden; margin: 0; width: 100%"><code class="java">
-
-
-
-
-    
-
-
-
-
-</code></pre>
-
-                    <pre class="fragment" style="width: 100%" data-fragment-index="2"><code data-trim class="java">
-class UserNameValidator implements ConstraintValidator&lt;NotTaken, String&gt; {
-
-    @Inject
-    UserRepository userRepo;
-
-    boolean isValid(String s, ConstraintValidatorContext cvc) {
-        return userRepo.findByName(s) == null;
-    }
-}
-</code></pre>
-
-
-                </section>
-
                 <section id="deltaspike-partialbean">
 
                     <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                     <div class="module-box deltaspike title">Partial Bean</div>
-                    
-                    <pre class="fragment"><code data-trim class="java">
+                    <p>Single dynamic implementation for bean interfaces</p>
 
+                    <div style="width:1030px; position: absolute;">
+                        <pre class="fragment" style="width: 680px; display: inline-block" data-fragment-index="1"><code class="java">
+public interface PersonQueryService {
+
+    @QueryMethod("select p from Person p order by p.name")
+    public List&lt;Person&gt; findAllSortedByName();
+    ...
+</code></pre>
+
+                        <pre class="fragment" style="display: inline-block; width: 330px; margin-left: 10px" data-fragment-index="3"><code class="java">
+@PartialBeanBinding
+@Target(TYPE)
+@Retention(RUNTIME)
+@interface QueryService {}
+
+</code></pre>
+                    </div>       
+                    <pre class="fragment code-overlay" style="width: 680px; margin-left: 2px" data-fragment-index="2"><code data-trim class="java">
+@QueryService
+public interface PersonQueryService {
+
+    @QueryMethod("select p from Person p order by p.name")
+    public List&lt;Person&gt; findAllSortedByName();
+    ...
+</code></pre>
+
+                    <pre style="visibility: hidden; margin: 0; width: 70%"><code class="java">
+
+
+
+
+
+
+</code></pre>
+
+                    <pre class="fragment" style="width: 1030px;" data-fragment-index="2"><code data-trim class="java">
+@QueryService
+public class QueryServicePartialBean implements InvocationHandler {
+    
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        String query = method.getAnnotation(QueryMethod.class);
+        ...
 </code></pre>
                 </section>
 
@@ -748,8 +795,24 @@ class UserNameValidator implements ConstraintValidator&lt;NotTaken, String&gt; {
 
                     <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                     <div class="module-box deltaspike title">Scheduler</div>
+                    <p>cron syntax, Quartz robustness, CDI awareness</p>
+                    <pre class="fragment" style="width: 100%"><code data-trim class="java">
+@Scheduled(cronExpression = "0 0 * */2 * ?")
+public class BackupJob implements org.quartz.Job {
 
+    @Inject @Backup
+    private Store store;
 
+    void execute(JobExecutionContext context) throws JobExecutionException {
+</code></pre>
+
+                    <pre class="fragment" style="width: 100%"><code data-trim class="java">
+@Inject
+Scheduler&lt;Job&gt; scheduler;
+
+private void registerJobs() {
+    scheduler.registerNewJob(BackupJob.class);
+</code></pre>
                 </section>
 
                 <!-- Matous -->
