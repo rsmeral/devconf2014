@@ -89,10 +89,15 @@
             }
 
             div.jsf_annotation {
-                width: 150px;
+                width: auto;
+                padding-left: 15px;
+                padding-right: 15px;
             }
+
             div.security_annotation {
-                width: 190px;
+                width: auto;
+                padding-left: 15px;
+                padding-right: 15px;
             }
 
         </style>
@@ -695,31 +700,6 @@ private String auditUser;
 
                 </section>
 
-
-
-
-                <section id="deltaspike-security-picketlink">
-
-                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                    <div class="module-box deltaspike title">Security</div> + <div class="module-box other-framework title">PicketLink</div>
-
-
-                </section>
-
-                <section id="deltaspike-security-picketlink">
-
-                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                    <div class="module-box deltaspike title">JSF</div> + <div class="module-box deltaspike title">Security</div> + <div class="module-box other-framework title">PicketLink</div>
-
-
-                </section>
-
-                <section id="agorava">
-
-                    <h2>Agorava</h2>
-
-                </section>
-
                 <!-- Matous -->
 
                 <section data-transition="fade" id="deltaspike-modules-allocation-matous">
@@ -756,29 +736,27 @@ private String auditUser;
                     <section id="ds-jsf-how">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">JSF</div>
-                        <p>How it works?</p>
+                        <p>How does it work?</p>
                         <div class="fragment">
                             <table width="1160px"><TR><TD width="820px" style="font-size:42px;">
                                         <pre><code data-trim class="java">
 @Folder
-public interface Pages
-{
-	@View (name = "home")
-	class Index implements ViewConfig { }
+public interface Pages {
+    @View (name = "home")
+    class Index implements ViewConfig { }
 
-	@Folder
-	interface Admin extends ViewConfig
-	{
-	        @View
-	        class Index implements Admin { }
-	}
+    @Folder
+    interface Admin extends ViewConfig {
+        @View
+        class Index implements Admin { }
+    }
 }
-					</code></pre>
+                    </code></pre>
                                     </TD><TD width="440px">
                                         <div class="fragment">
                                             <p style="font-size:33px;">leads to the following paths:</p>
                                             <code style="font-size:27px">
-                                                /pages/<br>	
+                                                /pages/<br>    
                                                 /pages/home.xhtml<br>
                                                 /pages/admin/<br>
                                                 /pages/admin/index.xhtml<br>
@@ -818,33 +796,28 @@ public interface Pages
 
                     <section id="ds-jsf-an-nav-par">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title jsf_annotation">JSF - annotation</div>
+                        <div class="module-box deltaspike title jsf_annotation">JSF &ndash; annotation</div>
                         <p>Navigation</p>
-                        <br>
-                        <div  style="margin-left:-150px;" class="fragment">
-                            <pre style="width: 1200px; font-size:25px;"><code style="min-height:450px" data-trim class="java">
+                        <div style="margin-left:-150px;" class="fragment">
+                            <pre style="width: 1200px; font-size:25px;"><code data-trim class="java">
 @Model
-public interface Pages extends ViewConfig
-{
-	class Index implements Pages 
-	{ 
-	        @NavigationParameter(key = "param", value = "#{myBean.property}")
-	        public Class&lt;? extends ViewConfig&gt; actionMethod()
-	        {
-	                return Pages.Home.class;
-	        }
-	}
-	
-	@View(navigation = REDIRECT, viewParams = INCLUDE)
-	class Home implements Pages { }
-}
-				</code></pre>
+public interface Pages extends ViewConfig {
+    class Index implements Pages { 
+            @NavigationParameter(key = "param", value = "#{myBean.property}")
+            public Class&lt;? extends ViewConfig&gt; actionMethod() {
+                    return Pages.Home.class;
+            }
+    }
+    
+    @View(navigation = REDIRECT, viewParams = INCLUDE)
+    class Home implements Pages { }
+}</code></pre>
                         </div>
                     </section>
 
                     <section id="ds-jsf-an-view-con-ref">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title jsf_annotation">JSF - annotation</div>
+                        <div class="module-box deltaspike title jsf_annotation">JSF &ndash; annotation</div>
                         <p>View-Controller Callbacks via @ViewControllerRef</p>
                         <br>
                         <div class="fragment">
@@ -856,15 +829,13 @@ public interface Pages extends ViewConfig
 public class MyPage implements ViewConfig { }
 
 @Model
-public class MyPageController
-{
+public class MyPageController {
     @PreRenderView
-    protected void load()
-    {
+    protected void load() {
         //...
     }
 }
-				</code></pre>
+                </code></pre>
                         </div>
                     </section>
 
@@ -904,7 +875,7 @@ public class MyPageController
                         <p class="fragment">Integration with JSF module<br>
                     </section>
 
-                    <section data-transition="fade" id="ds-security-an-bind">
+                    <section id="ds-security-an-bind">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title security_annotation">Security - annotation</div>
                         <p>@SecurityBindingType</p>
@@ -917,11 +888,11 @@ public class MyPageController
 @SecurityBindingType
 public @interface CustomSecurityBinding {
 }
-					</code></pre>
+                    </code></pre>
                         </div>
                     </section>
 
-                    <section data-transition="fade" id="ds-security-an-bind-auth">
+                    <section id="ds-security-an-bind-auth">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title security_annotation">Security - annotation</div>
                         <p>@CustomSecurityBinding</p>
@@ -930,9 +901,9 @@ public @interface CustomSecurityBinding {
 @CustomSecurityBinding
 public void doSomething(Thing thing)
 {
-	thing.doSomething();
+    thing.doSomething();
 }
-					</code></pre>
+                    </code></pre>
                         </div>
                         <br>
                         <div class="fragment" style="margin-left:-200px;">
@@ -943,13 +914,13 @@ public void doSomething(Thing thing)
 public boolean doSecuredCheck(InvocationContext invCont, BeanManager bm, @LoggedIn User user)
 throws Exception 
 {
-	return user.isLoggedIn(); // perform security check
+    return user.isLoggedIn(); // perform security check
 }
-					</code></pre>
+                    </code></pre>
                         </div>
                     </section>
 
-                    <!--		<section data-transition="fade" id="ds-security-an-param">
+                    <!--        <section data-transition="fade" id="ds-security-an-param">
                                             <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                                             <div class="module-box deltaspike title security_annotation">Security - annotation</div>
                                 <p>@SecurityParameterBinding</p>
@@ -979,7 +950,7 @@ throws Exception
                                 </div>
                             </section>-->
 
-                    <section data-transition="fade" id="ds-security-an-param">
+                    <section id="ds-security-an-param">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title security_annotation">Security - annotation</div>
                         <p>@Secured(AccessDecisionVoter.class)</p>
@@ -991,7 +962,7 @@ public class SecuredBean
 {
     //...
 }
-				</code></pre>
+                </code></pre>
                             <div class="fragment">
                                 <pre style="font-size:25px;"><code data-trim class="java">
 public class Bean
@@ -1002,32 +973,31 @@ public class Bean
         //...
     }
 }
-					</code></pre>
+                    </code></pre>
                             </div>
                         </div>
                     </section>
 
-                    <section data-transition="fade" id="ds-security-jsf-int">
+                    <section id="ds-security-jsf-int">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title jsf_annotation">Security  &  JSF</div>
+                        <div class="module-box deltaspike title">Security</div> + <div class="module-box deltaspike title">JSF</div>
                         <p>Integration with JSF module</p>
                         <div class="fragment">
-                            <br>
                             <pre style="font-size:25px;"><code data-trim class="java">
 @Secured(UserAccessDecisionVoter.class)
 public interface Pages extends ViewConfig
 {
-	class Index implements Pages { }
+    class Index implements Pages { }
 
-	@Secured(AdminAccessDecisionVoter.class)	
-	interface Admin extends Pages
-	{
-	        	class Manage implements Admin { }	
-	
-	        	class Home implements Admin { }
-	}
+    @Secured(AdminAccessDecisionVoter.class)    
+    interface Admin extends Pages
+    {
+                class Manage implements Admin { }    
+    
+                class Home implements Admin { }
+    }
 }
-					</code></pre>
+                    </code></pre>
                         </div>
                     </section>
                 </section>
