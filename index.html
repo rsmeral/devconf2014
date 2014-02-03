@@ -954,7 +954,28 @@ public @interface CustomSecurityBinding {
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Security</div>
                         <p>@CustomSecurityBinding</p>
-                        <div class="fragment">
+
+		<!--First slide with code example for secure method invocation-->
+
+                        <div style="position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="1">
+                            <pre style="font-size:25px;"><code class="java">
+public void doSomething(Thing thing) {
+
+    thing.doSomething();
+}</code></pre>
+                        <br>
+                            <pre style="margin-left:-50px; width: 1060px; font-size:25px;"><code class="java">
+
+public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
+    throws Exception {
+
+    return user.isLoggedIn(); // perform security check
+}</code></pre>
+                    </div>
+		
+		<!--Second slide with code example for secure method invocation-->
+
+			<div style="position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="2">
                             <pre style="font-size:25px;"><code data-trim class="java">
 @CustomSecurityBinding
 public void doSomething(Thing thing) {
@@ -962,11 +983,28 @@ public void doSomething(Thing thing) {
     thing.doSomething();
 }
                     </code></pre>
-                        </div>
                         <br>
-                        <div class="fragment" style="margin-left:-50px;">
-                            <p>+ @Secures</p>
-                            <pre style="width: 1060px; font-size:25px;"><code data-trim class="java">
+                            <pre style="margin-left:-50px; width: 1060px; font-size:25px;"><code class="java">
+@CustomSecurityBinding
+public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
+    throws Exception {
+
+    return user.isLoggedIn(); // perform security check
+}</code></pre>
+                    </div>
+
+		<!--Third slide with code example for secure method invocation-->
+
+			<div style="position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="3">
+                            <pre style="font-size:25px;"><code data-trim class="java">
+@CustomSecurityBinding
+public void doSomething(Thing thing) {
+
+    thing.doSomething();
+}
+                    </code></pre>
+                        <br>
+                            <pre style="margin-left:-50px; width: 1060px; font-size:25px;"><code data-trim class="java">
 @Secures
 @CustomSecurityBinding
 public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
@@ -974,8 +1012,11 @@ public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
 
     return user.isLoggedIn(); // perform security check
 }
-                    </code></pre>
-                        </div>
+                    	</code></pre>
+                    </div>
+
+
+
                     </section>
 
                     <section id="ds-security-an-param">
@@ -1145,7 +1186,7 @@ public void handleUserInfo() {
 			
 		</section>
 
-		<section id="agorava-how-time">
+		<section id="agorava-how-tweet">
                         <h2 style="margin: 0; padding: 0">Agorava</h2>
 			<br />
 			<p>Send tweet?</p>
