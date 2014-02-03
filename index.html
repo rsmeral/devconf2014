@@ -93,17 +93,6 @@
                 margin-top: 25px;
             }
 
-/*            div.jsf_annotation {
-                width: auto;
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-
-            div.security_annotation {
-                width: auto;
-                padding-left: 15px;
-                padding-right: 15px;
-            }*/
 
         </style>
     </head>
@@ -884,60 +873,33 @@ public interface Pages {
                         </div>
                     </section>
 
-
-                    <!--<section data-transition="fade" id="ds-jsf-an-view">
-                                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                                    <div class="module-box deltaspike title jsf_annotation">JSF - annotation</div>
-                        <div class="fragment">
-                            <p>@View(#name, #basepath, #navigation, #viewparams)</p>
-                            <br>
-                            <div style="margin-left:-150px;">
-                                <pre style="width: 1250px; font-size:25px;"><code data-trim class="java">
-            @View(name = "home", basePath = "/w1/", navigation = REDIRECT, viewParams = INCLUDE)
-            public class Index implements ViewConfig { }
-                                </code></pre>
-                            </div>
-                        </div>
-                    </section>
-            
-                    <section data-transition="fade" id="ds-jsf-an-folder">
-                                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                                    <div class="module-box deltaspike title jsf_annotation">JSF - annotaion</div>
-                        <p>@Folder(#name)</p>
-                        <br>
-                        <pre style="font-size:25px;"><code data-trim class="java">
-            @Folder(name = "/admin/")
-            public interface Pages implements ViewConfig { }
-                        </code></pre>
-                    </section>-->
-
                     <section id="ds-jsf-an-nav-par">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title jsf_annotation">JSF</div>
+                        <div class="module-box deltaspike title">JSF</div>
                         <p>Navigation</p>
-                        <div style="margin-left:-150px;" class="fragment">
+                        <div style="margin-left:-120px;" class="fragment">
                             <pre style="width: 1200px; font-size:25px;"><code style="min-height: 450px" data-trim class="java">
 @Model
 public interface Pages extends ViewConfig {
 
-    class Index implements Pages {
-
-            @NavigationParameter(key = "param", value = "#{myBean.property}")
-            public Class&lt;? extends ViewConfig&gt; actionMethod() {
-
-                    return Pages.Home.class;
-            }
-    }
-
     @View(navigation = REDIRECT, viewParams = INCLUDE)
     class Home implements Pages { }
+
+    class Index implements Pages {
+
+        @NavigationParameter(key = "param", value = "#{myBean.property}")
+        public Class&lt;? extends ViewConfig&gt; actionMethod() {
+
+                return Pages.Home.class;
+        }
+    }
 }</code></pre>
                         </div>
                     </section>
 
                     <section id="ds-jsf-an-view-con-ref">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title jsf_annotation">JSF</div>
+                        <div class="module-box deltaspike title">JSF</div>
                         <p>View-Controller Callbacks via @ViewControllerRef</p>
                         <br>
                         <div class="fragment">
@@ -959,31 +921,6 @@ public class MyPageController {
                 </code></pre>
                         </div>
                     </section>
-
-                    <!--<section data-transition="fade" id="ds-jsf-an-view-ref">
-                                    <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                                    <div class="module-box deltaspike title jsf_annotation">JSF - annotaion</div>
-                        <p>@ViewRef(#viewConfig)</p>
-                        <br>
-                        <div>
-                            <pre style="font-size:25px;"><code style="min-height:430px;" data-trim class="java">
-            public interface Pages extends ViewConfig
-            {
-                class Index implements Pages { }
-            }
-            
-            @ViewRef(Pages.Index.class)
-            public class IndexController implements Serializable
-            {
-                @PreRenderView
-                protected void preRenderView()
-                {
-                    //...
-                }
-            }
-                            </code></pre>
-                        </div>
-                    </section>-->
                 </section>
 
                 <section id="deltaspike-security-stack">
@@ -998,7 +935,7 @@ public class MyPageController {
 
                     <section id="ds-security-an-bind">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title security_annotation">Security</div>
+                        <div class="module-box deltaspike title">Security</div>
                         <p>@SecurityBindingType</p>
                         <br>
                         <div class="fragment">
@@ -1015,7 +952,7 @@ public @interface CustomSecurityBinding {
 
                     <section id="ds-security-an-bind-auth">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title security_annotation">Security</div>
+                        <div class="module-box deltaspike title">Security</div>
                         <p>@CustomSecurityBinding</p>
                         <div class="fragment">
                             <pre style="font-size:25px;"><code data-trim class="java">
@@ -1041,39 +978,9 @@ public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
                         </div>
                     </section>
 
-                    <!--        <section data-transition="fade" id="ds-security-an-param">
-                                            <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                                            <div class="module-box deltaspike title security_annotation">Security - annotation</div>
-                                <p>@SecurityParameterBinding</p>
-                                <br>
-                                <div>
-                                    <pre style="font-size:25px;"><code data-trim class="java">
-                    @Retention(value = RUNTIME)
-                    @Target({PARAMETER})
-                    @Documented
-                    @SecurityParameterBinding
-                    public @interface CurrentThing {
-                    }
-                                    </code></pre>
-                                    <div class="fragment">
-                                        <pre style="font-size:25px;"><code data-trim class="java">
-                    @CustomSecurityBinding
-                    doSomething(@CurrentThing Thing thing)
-                    //...
-                                        </code></pre>
-                                        <pre style="font-size:25px;"><code data-trim class="java">
-                    @Secures
-                    @CustomSecurityBinding
-                    doSecuredCheck(... @CurrentThing Thing thing, ...)
-                    //...
-                                        </code></pre>
-                                    </div>
-                                </div>
-                            </section>-->
-
                     <section id="ds-security-an-param">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title security_annotation">Security</div>
+                        <div class="module-box deltaspike title">Security</div>
                         <p>@Secured(AccessDecisionVoter.class)</p>
                         <br>
                         <div class="fragment">
@@ -1103,7 +1010,23 @@ public class Bean {
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Security</div> + <div class="module-box deltaspike title">JSF</div>
                         <p>Integration with JSF module</p>
-                        <div class="fragment">
+                        <div style="position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="1">
+                            <pre style="font-size:25px;"><code class="java">
+public interface Pages extends ViewConfig {
+
+    class Index implements Pages { }
+
+
+    interface Admin extends Pages {
+
+                class Manage implements Admin { }
+
+                class Home implements Admin { }
+    }
+}</code></pre>
+                        </div>
+
+			<div style="position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="2">
                             <pre style="font-size:25px;"><code data-trim class="java">
 @Secured(UserAccessDecisionVoter.class)
 public interface Pages extends ViewConfig {
@@ -1120,6 +1043,7 @@ public interface Pages extends ViewConfig {
 }
                     </code></pre>
                         </div>
+
                     </section>
                 </section>
 
@@ -1131,7 +1055,7 @@ public interface Pages extends ViewConfig {
 			<div style="text-align: left; display: inline-block; vertical-align: top; margin-top: 10px">
                             <div>
                                 <h3 style="display:inline" class="fragment">What?</h3>
-                                <p style="display: inline-block; vertical-align: top" class="fragment">CDI extension framework</p>
+                                <p style="display: inline-block; vertical-align: top" class="fragment">CDI extension framework<br />Originally Seam Social</p>
                             </div>
                             <br/>
                             <div>
