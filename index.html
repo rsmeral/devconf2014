@@ -1210,7 +1210,7 @@ public interface Pages extends ViewConfig {
 
 			<div style="position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="2">
                             <pre style="font-size:25px;"><code data-trim class="java">
-@Secured(UserAccessDecisionVoter.class)
+@Secured(EmployeeAccessDecisionVoter.class)
 public interface Pages extends ViewConfig {
 
     class Index implements Pages { }
@@ -1319,7 +1319,7 @@ twitter.apiSecret = your_secret_key
 		<section id="agorava-how-dance">
                         <h2 style="margin: 0; padding: 0">Agorava</h2>
 			<br />
-			<p>How to authorize?</p>
+			<p>OAuth authorization</p>
 			<div class="fragment" style="margin-left:-30px;">
 				<pre style="font-size:25px; width:1020px;"><code data-trim class="java">
 @Inject
