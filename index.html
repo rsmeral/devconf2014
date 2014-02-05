@@ -221,6 +221,7 @@ public changePassword(Credentials c) {
                     <h3 class="fragment">Frameworks</h3>
                     <p class="fragment"><small>zk, SoftwareMill</small></p>
                     <p class="fragment current-visible">Seam 3, MyFaces CODI</p>
+                    <p class="fragment current-visible" style="display: none"></p>
                     <p class="fragment current-visible">Unite</p>
                 </section>
 
@@ -1381,10 +1382,6 @@ public Tweet sendTweet(String msg) {
                          Server side does DS-Scheduler initiated Agorava-backed poll of twitter timeline -->
                 </section>
 
-                <section id="final-questions">
-                    <img src="img/got_questions_logo.png" style="border: none; background: none; box-shadow: none;" height="300" />
-                </section>
-
                 <section id="final-contribute">
                     <h2>How can I contribute?</h2>
                     <div class="fragment">
@@ -1408,6 +1405,10 @@ public Tweet sendTweet(String msg) {
                             <small><a href="https://github.com/agorava">https://github.com/agorava</a></small><br />
                         </p>
                     </div>
+                </section>
+                
+                <section id="final-questions">
+                    <img src="img/got_questions_logo.png" style="border: none; background: none; box-shadow: none;" height="300" />
                 </section>
 
                 <section id="final-thanks-feedback">
@@ -1435,7 +1436,7 @@ public Tweet sendTweet(String msg) {
             // Full list of configuration options available here:
             // https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
-                controls: true,
+                controls: false,
                 progress: true,
                 history: true,
                 center: true,
@@ -1469,7 +1470,10 @@ public Tweet sendTweet(String msg) {
                     {src: 'plugin/notes/notes.js', async: true, condition: function() {
                             return !!document.body.classList;
                         }}
-                ]
+                ],
+                keyboard: {
+                    13: 'next' // go to the next slide when the ENTER key is pressed
+                }
             });
             
             Reveal.addEventListener( 'fragmentshown', function( event ) {
