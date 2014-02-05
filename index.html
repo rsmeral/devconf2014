@@ -96,6 +96,49 @@
             code.code_title{
                 font-size:28px;
             }
+            
+            /* demo */
+            
+            /* hide scrollbar */
+            #your-tweets-wrapper {
+                overflow: hidden;
+            }
+            #your-tweets {
+                overflow-y: scroll;
+                width: 100%;
+                height: 600px;
+                padding-right: 20px;
+            }
+            
+            div.tweet {
+                background: rgba(0,0,0,0.4);
+                border-radius: 15px;
+                text-align: left;
+                margin: 10px;
+            }
+            
+            span.tweet-username {
+                font-size: 0.8em;
+                color: #666666;
+                display: inline-block;
+                padding-left: 15px;
+            }
+            
+            p.tweet-text {
+                font-size: 0.9em;
+                display: inline-block;
+                width: 80%;
+                vertical-align: top;
+                padding-top: 15px;
+            }
+            
+            .tweet img {
+                height: 80px;
+                width: 80px;
+                margin:20px !important;
+                border-radius: 10px;
+                border-color: #999999 !important;
+            }
 
         </style>
     </head>
@@ -1147,7 +1190,7 @@ public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
                     <section id="ds-security-classes">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Security</div>
-			<p>Securing an access to Java classes</p>
+                        <p>Securing access to Java classes</p>
                         <code class="fragment code_title">@Secured(AccessDecisionVoter.class)</code>
                         <br>
                         <div class="fragment">
@@ -1268,17 +1311,17 @@ public interface Pages extends ViewConfig {
                     </section>
 
 		<section id="agorava-provides">
-                        <h2 style="margin: 0; padding: 0">Agorava - What is on the menu?</h2>
+                        <h2 style="margin: 0; padding: 0">Agorava &ndash; What is on the menu?</h2>
 			<br />
 			<p class="fragment">A generic API to deal with OAuth 1.0a and 2.0 services</p>
 			<p class="fragment">Specific API for Twitter<img src="img/Twitter.png"  style="margin: 0px 0px -2px 3px; border:0px;" width="30"/>, Facebook<img src="img/Facebook.png" style="margin: 0px 0px -2px 3px; border:0px;" width="30"/> and LinkedIn<img src="img/LinkedIn.png" style="margin: 0px 0px -2px 3px; border:0px;" width="30"/></p>
 			<p class="fragment">API to retrieve basic user information from a Social Service</p>
-			<p class="fragment">SPI to extend Agorava with a new module for a new services</p>
+			<p class="fragment">SPI to extend Agorava with new modules for new services</p>
 			<p class="fragment">and much more ...</p>
 		</section>
 
 		<section id="agorava-how-settings">
-                        <h2 style="margin: 0; padding: 0">Agorava - How?</h2>
+                        <h2 style="margin: 0; padding: 0">Agorava &ndash; How?</h2>
 			<br />
 			<p class="fragment">1. Declare your OAuth application on the Social Media web site</p>
 			<p class="fragment">2. Get OAuth app keys</p>
@@ -1319,7 +1362,7 @@ String authURL = lifeCycelService.startDanceFor(Twitter.class);
 		<section id="agorava-how-time">
                         <h2 style="margin: 0; padding: 0">Agorava</h2>
 			<br />
-			<p>Wanna work with an user's info?</p>
+			<p>Wanna work with user's info?</p>
 			<div class="fragment" style="margin-left:-30px;">
 				<pre style="font-size:25px; width:1020px;"><code data-trim class="java">
 @Inject
@@ -1337,7 +1380,7 @@ public void handleUserInfo() {
 			
 		</section>
 
-		<section id="agorava-how-tweet">
+		<section id="agorava-how-tweet" data-state="prepare-tweets">
                         <h2 style="margin: 0; padding: 0">Agorava</h2>
 			<br />
 			<p>Send tweet?</p>
@@ -1360,11 +1403,16 @@ public Tweet sendTweet(String msg) {
 
                 <!-- FINAL SLIDES -->
 
-                <section id="agorava-scheduler-twitter-demo">
+                <section id="agorava-twitter-demo">
 
-                    <h2>Demo time</h2>
+                    <h2>Your tweets</h2>
                     <!-- AJAX polling or websocket served feed of twitter timeline for @rsmeral #devconf 
-                         Server side does DS-Scheduler initiated Agorava-backed poll of twitter timeline -->
+                         Agorava-backed poll of twitter timeline -->
+                    <div id="your-tweets-wrapper">
+                        <div id="your-tweets">
+                            Loading tweets...
+                        </div>
+                    </div>
                 </section>
 
                 <section id="final-contribute">
@@ -1396,7 +1444,7 @@ public Tweet sendTweet(String msg) {
                 </section>
                 
                 <section id="final-questions">
-			<p>Slides at <a href="https://github.com/rsmeral/devconf2014">https://github.com/rsmeral/devconf2014</a></p>
+                    <p>Slides at <a href="https://github.com/rsmeral/devconf2014">https://github.com/rsmeral/devconf2014</a></p>
                     <img  class="fragment" src="img/got_questions_logo.png" style="border: none; background: none; box-shadow: none;" height="300" />
                 </section>
 
@@ -1419,8 +1467,37 @@ public Tweet sendTweet(String msg) {
 
         <script src="lib/js/head.min.js"></script>
         <script src="js/reveal.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
         <script>
+
+            // demo
+            var POLL_URL="http://devconf-nzr.rhcloud.com/devconf2014-demo/tweets";// "http://localhost:8080/devconf2014-demo/tweets";
+            var pollSeconds = 10;
+            var pollTimeout;
+
+            function renderTweets(data) {
+                var items = [];
+                $.each(data, function(key, val) {
+                    items.push("<div class='tweet'><img src='"+ val.avatarUrl +"' /><p class='tweet-text'>" + val.text.replace("\n"," ") + "<span class='tweet-username'>@" + val.username + "</span></p></div>" );
+                });
+                
+                $("#your-tweets").html(items.join(""));
+            }
+            
+            function pollTweets() {
+                $.getJSON(POLL_URL, renderTweets);
+            }
+            
+            function startPollingTweets() {
+                clearTimeout(pollTimeout);
+                pollTweets();
+                pollTimeout = setTimeout(startPollingTweets, pollSeconds*1000);
+            }
+            
+            Reveal.addEventListener('prepare-tweets', function(event) {
+                startPollingTweets();
+            } );
 
             // Full list of configuration options available here:
             // https://github.com/hakimel/reveal.js#configuration
@@ -1461,10 +1538,12 @@ public Tweet sendTweet(String msg) {
                         }}
                 ],
                 keyboard: {
-                    13: 'next' // go to the next slide when the ENTER key is pressed
+                    13: 'next', // go to the next slide when the ENTER key is pressed
+                    68: startPollingTweets // 'd' to launch demo
                 }
             });
             
+            // zoom in on a fragment which contains ds-zoom-in class
             Reveal.addEventListener( 'fragmentshown', function( event ) {
                 if(event.fragment.classList.contains("ds-zoom-in")) {
                     zoom.to({element: event.fragment});
