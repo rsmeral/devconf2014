@@ -93,9 +93,9 @@
                 margin-top: 25px;
             }
 
-	    code.code_title{
-		font-size:28px;
-	    }
+            code.code_title{
+                font-size:28px;
+            }
 
         </style>
     </head>
@@ -207,7 +207,7 @@ public changePassword(Credentials c) {
                 <section id="cdi-ext">
                     <h2>CDI extensions</h2>
                     <p>SPI for integration with other technologies<br /><small>Seam, Spring, GWT, ...</small></p>
-                    <p class="fragment">ServiceLoader pattern<br /><small>META-INF/services</small></p>
+                    <!--<p class="fragment">ServiceLoader pattern<br /><small>META-INF/services</small></p>-->
                     <p class="fragment">Custom scopes<br /><small><code>@PageScope, @BusinessProcessScope</code></small></p>
                     <p class="fragment">Provide beans, augment existing beans</p>
                     <p class="fragment">Catch system events for deployment phases<br /><small>before/after deployment, per bean, per injection point</small></p>
@@ -215,16 +215,57 @@ public changePassword(Credentials c) {
 
                 <section id="cdi-existing-ext">
                     <h2>Existing extensions</h2>
-                    <p class="fragment">Many integrations with other frameworks</p>
+                    <p class="fragment">Integrations with other frameworks</p>
                     <p class="fragment">PicketLink, RestEasy, Agorava, &hellip;</p>
                     <br />
                     <h3 class="fragment">Frameworks</h3>
-                    <p class="fragment"><small>zk, SoftwareMill</small></p>
+                    <p class="fragment">zk, SoftwareMill, &hellip;</p>
                     <p class="fragment current-visible">Seam 3, MyFaces CODI</p>
                     <p class="fragment current-visible" style="display: none"></p>
                     <p class="fragment current-visible">Unite</p>
                 </section>
 
+                <section data-transition="fade" id="deltaspike-intro">
+                    <h2>DeltaSpike</h2>
+                    <div>
+                        <div style="width: 200px; display: inline-block">
+                            <div class="module-box deltaspike">Core</div>
+                            <div class="module-box deltaspike">Data</div>
+                            <div class="module-box deltaspike">JPA</div>
+                            <div class="module-box deltaspike">BeanVal</div>
+                            <div class="module-box deltaspike">Partial Bean</div>
+                            <div class="module-box deltaspike">Scheduler</div>
+                            <div class="module-box deltaspike">Test Control</div>
+                            <div class="module-box deltaspike">Servlet</div>
+                            <div class="module-box deltaspike">JSF</div>
+                            <div class="module-box deltaspike">Security</div>
+                            <div class="module-box invisible">spacer</div>
+                            <div class="module-box invisible">spacer</div>
+                        </div>
+                        <div style="width: 600px; text-align: left; display: inline-block; vertical-align: top; margin-top: 10px">
+                            <div>
+                                <h3 style="display:inline" class="fragment">What?</h3>
+                                <p style="display: inline-block; vertical-align: top" class="fragment">CDI extension framework</p>
+                            </div>
+                            <br/>
+                            <div>
+                                <h3 style="display:inline" class="fragment">Why?</h3>
+                                <p style="display: inline-block; vertical-align: top" class="fragment">Unite efforts</p>
+                            </div>
+                            <br/>
+                            <div>
+                                <h3 style="display:inline" class="fragment">Who?</h3>
+                                <p style="display: inline-block; vertical-align: top" class="fragment">Apache committers<br />Seam developers<br />other CDI ext. authors</p>
+                            </div>
+                            <br/>
+                            <div>
+                                <h3 style="display:inline" class="fragment">When?</h3>
+                                <p style="display: inline-block; vertical-align: top" class="fragment">now: 0.6-SNAPSHOT<br /><i>soon:</i> 1.0</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
                 <!-- DUMMY SECTION, FIX HEIGHT + TRANSITION HELPER -->
                 <section data-transition="fade" id="cdi-frameworks-transition-helper">
                     <h2>Frameworks</h2>
@@ -372,47 +413,6 @@ public changePassword(Credentials c) {
                     </div>
                 </section>
 
-                <section data-transition="fade" id="deltaspike-intro">
-                    <h2>DeltaSpike</h2>
-                    <div>
-                        <div style="width: 200px; display: inline-block">
-                            <div class="module-box deltaspike">Core</div>
-                            <div class="module-box deltaspike">Data</div>
-                            <div class="module-box deltaspike">JPA</div>
-                            <div class="module-box deltaspike">BeanVal</div>
-                            <div class="module-box deltaspike">Partial Bean</div>
-                            <div class="module-box deltaspike">Scheduler</div>
-                            <div class="module-box deltaspike">Test Control</div>
-                            <div class="module-box deltaspike">Servlet</div>
-                            <div class="module-box deltaspike">JSF</div>
-                            <div class="module-box deltaspike">Security</div>
-                            <div class="module-box invisible">spacer</div>
-                            <div class="module-box invisible">spacer</div>
-                        </div>
-                        <div style="width: 600px; text-align: left; display: inline-block; vertical-align: top; margin-top: 10px">
-                            <div>
-                                <h3 style="display:inline" class="fragment">What?</h3>
-                                <p style="display: inline-block; vertical-align: top" class="fragment">CDI extension framework</p>
-                            </div>
-                            <br/>
-                            <div>
-                                <h3 style="display:inline" class="fragment">Why?</h3>
-                                <p style="display: inline-block; vertical-align: top" class="fragment">Unite efforts</p>
-                            </div>
-                            <br/>
-                            <div>
-                                <h3 style="display:inline" class="fragment">Who?</h3>
-                                <p style="display: inline-block; vertical-align: top" class="fragment">Apache committers<br />Seam developers<br />other CDI ext. authors</p>
-                            </div>
-                            <br/>
-                            <div>
-                                <h3 style="display:inline" class="fragment">When?</h3>
-                                <p style="display: inline-block; vertical-align: top" class="fragment">now: 0.6-SNAPSHOT<br /><i>soon:</i> 1.0</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
                 <section data-transition="fade" id="deltaspike-modules-intro">
                     <h2>DeltaSpike</h2>
                     <div style="width: 200px; display: inline-block">
@@ -440,7 +440,7 @@ public changePassword(Credentials c) {
                             <div class="module-box deltaspike inactive">JPA</div>
                             <div class="module-box deltaspike">BeanVal</div>
                             <div class="module-box deltaspike">Partial Bean</div>
-                            <div class="module-box deltaspike">Scheduler</div>
+                            <div class="module-box deltaspike inactive">Scheduler</div>
                             <div class="module-box deltaspike inactive">Test Control</div>
                             <div class="module-box deltaspike inactive">Servlet</div>
                             <div class="module-box deltaspike inactive">JSF</div>
@@ -456,6 +456,7 @@ public changePassword(Credentials c) {
                     <section id="ds-core-exceptions">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Core</div>
+                        <p>Features for extension authors and users</p>
                         <p class="fragment" data-fragment-index="0">Exceptions as events</p>
                         <pre style="position: absolute; width: 100%" class="fragment" data-fragment-index="1">
 <code class="java">
@@ -476,16 +477,6 @@ try {
     doSomethingNasty();
 } catch(TooNastyException ex) {
     exEvt.fire(new ExceptionToCatchEvent(ex));
-}
-</code></pre>
-                        <pre style="position: absolute; width: 100%" class="fragment code-overlay" data-fragment-index="5">
-<code class="java">@Inject
-private Event&lt;ExceptionToCatchEvent&gt; exEvt;
-...
-try {
-    doSomethingNasty();
-} catch(TooNastyException ex) {
-    exEvt.fire(new ExceptionToCatchEvent(ex, new UglyLiteral()));
 }
 </code></pre>
                         <!-- overlay helper spacer -->
@@ -509,11 +500,6 @@ public class LoggingHandler {
 @ExceptionHandler
 public class NastinessHandler {
     void spank(@Handles ExceptionEvent&lt;TooNastyException&gt; evt) {
-</code></pre>
-                        <pre class="fragment code-overlay" style="position: absolute; width: 100%;" data-fragment-index="5"><code data-trim class="java">
-@ExceptionHandler
-public class NastinessHandler {
-    void spank(@Handles @Ugly ExceptionEvent&lt;TooNastyException&gt; evt) {
 </code></pre>
                     </section>
 
@@ -637,7 +623,6 @@ class UserNameValidator implements ConstraintValidator&lt;NotTaken, String&gt; {
 
                     <section id="ds-data-intro">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-
                         <div class="module-box deltaspike title">Data</div>
                         <br />
                         <pre style="font-size: 0.2em; display: inline-block; width: 49%; overflow: hidden; letter-spacing: 0.05em" class="fragment ds-zoom-in" id="ds-data-frag-jdbc"><code style="overflow: hidden" data-trim class="java">
@@ -784,14 +769,7 @@ extends EntityRepository&lt;Person, Long&gt; {}
                     <section id="ds-data-features">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Data</div>
-                        <div>
-                            <p>Query as annotation</p>
-                            <pre><code data-trim class="java">
-@Query("SELECT p from Person p where p.birthDate = ?1")
-Person findByBirthDate(Date d);
-</code></pre>
-                        </div>
-
+                        <p>Data repositories made simple</p>
                         <div class="fragment">
                             <p>Method name DSL</p>
                             <pre><code data-trim class="java">
@@ -799,24 +777,31 @@ List&lt;Person&gt; findByNameLikeAndAgeBetweenAndGender(
     String name, int minAge, int maxAge, Gender gender);
 </code></pre>
                         </div>
+                        <div class="fragment">
+                            <p>Query as annotation</p>
+                            <pre><code data-trim class="java">
+@Query("SELECT p from Person p where p.birthDate = ?1")
+Person findByBirthDate(Date d);
+</code></pre>
+                        </div>
                     </section>
 
                     <section id="ds-data-features-more">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Data</div>
-                        <div class="fragment">
+                        <div>
                             <p>Auditing API</p>
-                            <pre><code data-trim class="java">
+<!--                            <pre><code data-trim class="java">
 @ModifiedOn
 @Temporal(TemporalType.TIMESTAMP)
 private Date updated;
 
 @ModifiedBy
 private String auditUser;
-</code></pre>
+</code></pre>-->
                         </div>
 
-                        <div class="fragment">
+                        <div>
                             <p>Criteria API support</p>
                             <p>Query Delegate &ndash; custom DSL</p>
                             <p>DTO mapping</p>
@@ -884,7 +869,7 @@ public class QueryServicePartialBean implements InvocationHandler {
         ...
 </code></pre>
                 </section>
-
+<!--
                 <section id="deltaspike-scheduler">
 
                     <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
@@ -907,7 +892,7 @@ Scheduler&lt;Job&gt; scheduler;
 private void registerJobs() {
     scheduler.registerNewJob(BackupJob.class);
 </code></pre>
-                </section>
+                </section>-->
 
                                 <!-- Matous -->
 
