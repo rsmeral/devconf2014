@@ -93,6 +93,10 @@
                 margin-top: 25px;
             }
 
+	    code.code_title{
+		font-size:28px;
+	    }
+
         </style>
     </head>
 
@@ -904,7 +908,7 @@ private void registerJobs() {
 </code></pre>
                 </section>
 
-                <!-- Matous -->
+                                <!-- Matous -->
 
                 <section data-transition="fade" id="deltaspike-modules-allocation-matous">
                     <h2>DeltaSpike</h2>
@@ -920,27 +924,18 @@ private void registerJobs() {
                             <div class="module-box deltaspike inactive">Servlet</div>
                             <div class="module-box deltaspike">JSF</div>
                             <div class="module-box deltaspike">Security</div>
-                            <div class="module-box other-framework">Agorava</div>
                             <div class="module-box other-framework">PicketLink</div>
+                            <div class="module-box other-framework">Agorava</div>
                         </div>
                     </div>
                 </section>
 
                 <section id="deltaspike-jsf-stack">
 
-                    <section id="ds-jsf-intro">
+                    <section id="ds-jsf-type-save">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">JSF</div>
                         <p class="fragment">Type-safe view-configs</p>
-                        <p class="fragment">Multiple meta-data inheritance</p>
-                        <p class="fragment">Benefits from features of any modern Java IDE<br>
-                            <small>auto-completion, checking typos, find usages, refactoring and maintenance, inheritance presentation</small></p>
-                    </section>
-
-                    <section id="ds-jsf-how">
-                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title">JSF</div>
-                        <p>How does it work?</p>
                         <div class="fragment">
                             <table width="1160px"><TR><TD width="820px" style="font-size:42px;">
                                         <pre><code data-trim class="java">
@@ -960,7 +955,6 @@ public interface Pages {
                     </code></pre>
                                     </TD><TD width="440px">
                                         <div class="fragment">
-                                            <p style="font-size:33px;">leads to the following paths:</p>
                                             <code style="font-size:27px">
                                                 /pages/<br>    
                                                 /pages/home.xhtml<br>
@@ -977,12 +971,43 @@ public interface Pages {
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">JSF</div>
                         <p>Navigation</p>
-                        <div style="margin-left:-120px;" class="fragment">
-                            <pre style="width: 1200px; font-size:25px;"><code style="min-height: 450px" data-trim class="java">
+                        <div style="margin-left:-120px; position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="1">
+                            <pre style="width: 1070px; font-size:25px;"><code data-trim class="java">
 @Model
 public interface Pages extends ViewConfig {
 
-    @View(navigation = REDIRECT, viewParams = INCLUDE)
+
+    class Home implements Pages { }
+
+    class Index implements Pages { }
+}</code></pre>
+                        </div>
+
+			<div style="margin-left:-120px; position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="2">
+                            <pre style="width: 1070px; font-size:25px;"><code style="min-height: 450px" data-trim class="java">
+@Model
+public interface Pages extends ViewConfig {
+
+
+    class Home implements Pages { }
+
+    class Index implements Pages {
+
+
+        public Class&lt;? extends ViewConfig&gt; actionMethod() {
+
+                return Pages.Home.class;
+        }
+    }
+}</code></pre>
+                        </div>
+
+			<div style="margin-left:-120px; position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="3">
+                            <pre style="width: 1070px; font-size:25px;"><code style="min-height: 450px" data-trim class="java">
+@Model
+public interface Pages extends ViewConfig {
+
+
     class Home implements Pages { }
 
     class Index implements Pages {
@@ -995,12 +1020,32 @@ public interface Pages extends ViewConfig {
     }
 }</code></pre>
                         </div>
+
+			<div style="margin-left:-120px; position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="4">
+                            <pre style="width: 1070px; font-size:25px;"><code style="min-height: 450px" data-trim class="java">
+@Model
+public interface Pages extends ViewConfig {
+
+    @View(viewParams = INCLUDE)
+    class Home implements Pages { }
+
+    class Index implements Pages {
+
+        @NavigationParameter(key = "param", value = "#{myBean.property}")
+        public Class&lt;? extends ViewConfig&gt; actionMethod() {
+
+                return Pages.Home.class;
+        }
+    }
+}</code></pre>
+                        </div>
+
                     </section>
 
-                    <section id="ds-jsf-an-view-con-ref">
+                    <!--<section id="ds-jsf-an-view-con-ref">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">JSF</div>
-                        <p>View-Controller Callbacks via @ViewControllerRef</p>
+                        <p>View-Controller Callbacks</p>
                         <br>
                         <div class="fragment">
                             <p style="font-size:30px; width: 1200px; margin-left:-100px;"><code>@InitView, @PreViewAction, @PreRenderView and @PostRenderView</code></p>
@@ -1020,23 +1065,16 @@ public class MyPageController {
 }
                 </code></pre>
                         </div>
-                    </section>
+                    </section>-->
                 </section>
 
                 <section id="deltaspike-security-stack">
 
-                    <section id="ds-security-intro">
+                    <section id="ds-security-method">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Security</div>
-                        <p class="fragment">Secures a method invocation</p>
-                        <p class="fragment">Secures an access to classes</p>
-                        <p class="fragment">Integration with JSF module<br>
-                    </section>
-
-                    <section id="ds-security-an-bind">
-                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title">Security</div>
-                        <p>@SecurityBindingType</p>
+			<p class="fragment">Securing method invocation</p>
+                        <code class="fragment code_title">@SecurityBindingType</code>
                         <br>
                         <div class="fragment">
                             <pre style="font-size:25px;"><code data-trim class="java">
@@ -1053,7 +1091,8 @@ public @interface CustomSecurityBinding {
                     <section id="ds-security-an-bind-auth">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Security</div>
-                        <p>@CustomSecurityBinding</p>
+			<br />
+                        <code class="code_title">@CustomSecurityBinding</code>
 
 		<!--First slide with code example for secure method invocation-->
 
@@ -1119,10 +1158,11 @@ public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
 
                     </section>
 
-                    <section id="ds-security-an-param">
+                    <section id="ds-security-classes">
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Security</div>
-                        <p>@Secured(AccessDecisionVoter.class)</p>
+			<p>Securing an access to Java classes</p>
+                        <code class="fragment code_title">@Secured(AccessDecisionVoter.class)</code>
                         <br>
                         <div class="fragment">
                             <pre style="font-size:25px;"><code data-trim class="java">
@@ -1206,7 +1246,7 @@ public interface Pages extends ViewConfig {
 					<p style="display:inline" class="fragment">Provided features: </p>
 					<div style="display: inline-block; vertical-align: top; margin-left:10px;"><p class="fragment">authenticating users</p><p class="fragment">authorizing access</p><p class="fragment">managing of users, groups, roles,..</p><p class="fragment">plus much more...</p></div>
 				<div>
-				<p style="display:inline; color:#ff3838;" class="fragment">Not CDI extension<div class="fragment" style="display: inline-block; color:#66ff66;">, but it provides CDI producers</div></p>
+				<p class="fragment">Integrates DeltaSpike Security</p>
 				<p class="fragment">The simplest solution for Seam / DeltaSpike based apps</p>
 			</div>
                     </section>
@@ -1236,7 +1276,7 @@ public interface Pages extends ViewConfig {
                             <br/>
                             <div>
                                 <h3 style="display:inline" class="fragment">When?</h3>
-                                <p style="display: inline-block; vertical-align: top" class="fragment">now: 0.7.0<br /><i>soon:</i> 1.0</p>
+                                <p style="display: inline-block; vertical-align: top" class="fragment">version: 0.7.0<br/><font size="5px">Nov 20, 2013</font></p>
                             </div>
                         </div>
                     </section>
@@ -1245,8 +1285,8 @@ public interface Pages extends ViewConfig {
                         <h2 style="margin: 0; padding: 0">Agorava - What is on the menu?</h2>
 			<br />
 			<p class="fragment">A generic API to deal with OAuth 1.0a and 2.0 services</p>
-			<p class="fragment">API to retrieve basic user information from a Social Service</p>
 			<p class="fragment">Specific API for Twitter<img src="img/Twitter.png"  style="margin: 0px 0px -2px 3px; border:0px;" width="30"/>, Facebook<img src="img/Facebook.png" style="margin: 0px 0px -2px 3px; border:0px;" width="30"/> and LinkedIn<img src="img/LinkedIn.png" style="margin: 0px 0px -2px 3px; border:0px;" width="30"/></p>
+			<p class="fragment">API to retrieve basic user information from a Social Service</p>
 			<p class="fragment">SPI to extend Agorava with a new module for a new services</p>
 			<p class="fragment">and much more ...</p>
 		</section>
