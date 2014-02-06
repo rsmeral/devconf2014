@@ -139,6 +139,20 @@
                 border-radius: 10px;
                 border-color: #999999 !important;
             }
+            
+            input#your-tweets-filter {
+                background: rgba(0,0,0,0.4);
+                border: none;
+                border-radius: 15px;
+                text-align: center;
+                width: 100%;
+                font-size: 0.7em;
+                color: #999999;
+            }
+            
+            input#your-tweets-filter:focus {
+                outline: none;
+            }
 
         </style>
     </head>
@@ -1379,6 +1393,9 @@ public Tweet sendTweet(String msg) {
                     <h2>Your tweets</h2>
                     <!-- AJAX polling or websocket served feed of twitter timeline for @rsmeral #devconf 
                          Agorava-backed poll of twitter timeline -->
+                    <div>
+                        <input type="text" id="your-tweets-filter" value="#devconf"/>
+                    </div>
                     <div id="your-tweets-wrapper">
                         <div id="your-tweets">
                             Loading tweets...
@@ -1443,8 +1460,8 @@ public Tweet sendTweet(String msg) {
         <script>
 
             // demo
-            var POLL_URL="http://devconf-nzr.rhcloud.com/devconf2014-demo/tweets";// "http://localhost:8080/devconf2014-demo/tweets";
-            var pollSeconds = 10;
+            var POLL_URL="http://localhost:8080/devconf2014-demo/tweets";// "http://devconf-nzr.rhcloud.com/devconf2014-demo/tweets"
+            var pollSeconds = 15;
             var pollTimeout;
 
             function renderTweets(data) {
@@ -1457,7 +1474,8 @@ public Tweet sendTweet(String msg) {
             }
             
             function pollTweets() {
-                $.getJSON(POLL_URL, renderTweets);
+                var filterElem = document.getElementById("your-tweets-filter");
+                $.getJSON(POLL_URL, {filter: filterElem.value}, renderTweets);
             }
             
             function startPollingTweets() {
