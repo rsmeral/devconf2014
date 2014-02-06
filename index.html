@@ -1070,31 +1070,6 @@ public interface Pages extends ViewConfig {
                         </div>
 
                     </section>
-
-                    <!--<section id="ds-jsf-an-view-con-ref">
-                        <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
-                        <div class="module-box deltaspike title">JSF</div>
-                        <p>View-Controller Callbacks</p>
-                        <br>
-                        <div class="fragment">
-                            <p style="font-size:30px; width: 1200px; margin-left:-100px;"><code>@InitView, @PreViewAction, @PreRenderView and @PostRenderView</code></p>
-                        </div>
-                        <div class="fragment">
-                            <pre style="font-size:25px;"><code data-trim class="java">
-@ViewControllerRef(MyPageController.class)
-public class MyPage implements ViewConfig { }
-
-@Model
-public class MyPageController {
-
-    @PreRenderView
-    protected void load() {
-        //...
-    }
-}
-                </code></pre>
-                        </div>
-                    </section>-->
                 </section>
 
                 <section id="deltaspike-security-stack">
@@ -1103,18 +1078,18 @@ public class MyPageController {
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Security</div>
 			<p class="fragment">Securing method invocation</p>
-                        <code class="fragment code_title">@SecurityBindingType</code>
-                        <br>
-                        <div class="fragment">
-                            <pre style="font-size:25px;"><code data-trim class="java">
+			<div class="fragment">
+				<code class="code_title">@SecurityBindingType</code>
+				<br>
+				<pre style="font-size:25px;"><code data-trim class="java">
 @Retention(value = RUNTIME)
 @Target({TYPE, METHOD})
 @Documented
 @SecurityBindingType
 public @interface CustomSecurityBinding {
 }
-                    </code></pre>
-                        </div>
+                    	</code></pre>
+                    	</div>
                     </section>
 
                     <section id="ds-security-an-bind-auth">
@@ -1131,14 +1106,6 @@ public void doSomething(Thing thing) {
 
     thing.doSomething();
 }</code></pre>
-                        <br>
-                            <pre style="margin-left:-50px; width: 1060px; font-size:25px;"><code class="java">
-
-public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
-    throws Exception {
-
-    return user.isLoggedIn(); // perform security check
-}</code></pre>
                     </div>
 		
 		<!--Second slide with code example for secure method invocation-->
@@ -1150,15 +1117,7 @@ public void doSomething(Thing thing) {
 
     thing.doSomething();
 }
-                    </code></pre>
-                        <br>
-                            <pre style="margin-left:-50px; width: 1060px; font-size:25px;"><code class="java">
-@CustomSecurityBinding
-public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
-    throws Exception {
-
-    return user.isLoggedIn(); // perform security check
-}</code></pre>
+                    	   </code></pre>
                     </div>
 
 		<!--Third slide with code example for secure method invocation-->
@@ -1191,25 +1150,20 @@ public boolean doSecCheck(InvocationContext invCont, @LoggedIn User user)
                         <h2 style="margin: 0; padding: 0">DeltaSpike</h2>
                         <div class="module-box deltaspike title">Security</div>
                         <p>Securing access to Java classes</p>
-                        <code class="fragment code_title">@Secured(AccessDecisionVoter.class)</code>
+                        <code class="code_title">@Secured(Class&lt;? extends AccessDecisionVoter&gt;)</code>
                         <br>
                         <div class="fragment">
-                            <pre style="font-size:25px;"><code data-trim class="java">
+                            <pre style="font-size:25px; width:1150px; margin-left:-50px"><code data-trim class="java">
+public interface AccessDecisionVoter extends Serializable {
+
+    Set&lt;SecurityViolation&gt; checkPermission(AccessDecisionVoterContext context);
+} 		            </code></pre>
+                            <div class="fragment">
+                                <pre style="font-size:25px;"><code data-trim class="java">
 @Secured(CustomAccessDecisionVoter.class)
 public class SecuredBean {
 
     //...
-}
-                </code></pre>
-                            <div class="fragment">
-                                <pre style="font-size:25px;"><code data-trim class="java">
-public class Bean {
-
-    @Secured(CustomAccessDecisionVoter.class)
-    public String securedMethod() {
-
-        //...
-    }
 }
                     </code></pre>
                             </div>
@@ -1243,7 +1197,7 @@ public interface Pages extends ViewConfig {
 
     class Index implements Pages { }
 
-    @Secured(AdminAccessDecisionVoter.class)    
+    
     interface Admin extends Pages {
 
                 class Manage implements Admin { }
@@ -1253,7 +1207,24 @@ public interface Pages extends ViewConfig {
 }
                     </code></pre>
                         </div>
+	
+			<div style="position: absolute; width: 100%" class="code-overlay fragment" data-fragment-index="3">
+                            <pre style="font-size:25px;"><code data-trim class="java">
+@Secured(EmployeeAccessDecisionVoter.class)
+public interface Pages extends ViewConfig {
 
+    class Index implements Pages { }
+
+    @Secured(AdminAccessDecisionVoter.class)    
+    interface Admin extends Pages {
+
+                class Manage implements Admin { }
+
+                class Home implements Admin { }
+    }
+}
+                   		</code></pre>
+			</div>
                     </section>
 		</section>
 
@@ -1300,7 +1271,7 @@ public interface Pages extends ViewConfig {
                             <br/>
                             <div>
                                 <h3 style="display:inline" class="fragment">Who?</h3>
-                                <p style="display: inline-block; vertical-align: top" class="fragment">JBoss committers<br />other CDI ext. authors</p>
+                                <p style="display: inline-block; vertical-align: top" class="fragment">Antoine Sabot-Durand<br />other CDI ext. authors</p>
                             </div>
                             <br/>
                             <div>
@@ -1317,7 +1288,6 @@ public interface Pages extends ViewConfig {
 			<p class="fragment">Specific API for Twitter<img src="img/Twitter.png"  style="margin: 0px 0px -2px 3px; border:0px;" width="30"/>, Facebook<img src="img/Facebook.png" style="margin: 0px 0px -2px 3px; border:0px;" width="30"/> and LinkedIn<img src="img/LinkedIn.png" style="margin: 0px 0px -2px 3px; border:0px;" width="30"/></p>
 			<p class="fragment">API to retrieve basic user information from a Social Service</p>
 			<p class="fragment">SPI to extend Agorava with new modules for new services</p>
-			<p class="fragment">and much more ...</p>
 		</section>
 
 		<section id="agorava-how-settings">
@@ -1348,12 +1318,13 @@ twitter.apiSecret = your_secret_key
                         <h2 style="margin: 0; padding: 0">Agorava</h2>
 			<br />
 			<p>OAuth authorization</p>
-			<div class="fragment" style="margin-left:-30px;">
-				<pre style="font-size:25px; width:1020px;"><code data-trim class="java">
+			<br/>
+			<div class="fragment" style="margin-left:-50px;">
+				<pre style="font-size:25px; width:1180px;"><code data-trim class="java">
 @Inject
 OAuthLifeCycleService lifeCycleService;
 
-String authURL = lifeCycelService.startDanceFor(Twitter.class);
+String authURL = lifeCycelService.startDanceFor(Twitter.class, "/icallback.jsf");
 				</code></pre>
 			</div>
 			
@@ -1374,7 +1345,7 @@ public void handleUserInfo() {
         userService.getProfileId();
         userService.getScreenName();
         //...
-    }
+}
 				</code></pre>
 			</div>
 			
@@ -1393,7 +1364,7 @@ TwitterTimelineService tl;
 public Tweet sendTweet(String msg) {
 
         return tl.updateStatus(msg);
-    }
+}
 				</code></pre>
 			</div>
 			
