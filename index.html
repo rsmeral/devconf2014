@@ -106,7 +106,7 @@
             #your-tweets {
                 overflow-y: scroll;
                 width: 100%;
-                height: 600px;
+                height: 500px;
                 padding-right: 20px;
             }
             
@@ -141,7 +141,7 @@
             }
             
             input#your-tweets-filter {
-                background: rgba(0,0,0,0.4);
+                background: none;
                 border: none;
                 border-radius: 15px;
                 text-align: center;
@@ -152,6 +152,12 @@
             
             input#your-tweets-filter:focus {
                 outline: none;
+            }
+            
+            #agorava-twitter-demo-at {
+                font-size: 0.8em;
+                opacity: 0.5;
+                margin-top: 15px;
             }
 
         </style>
@@ -1390,9 +1396,8 @@ public Tweet sendTweet(String msg) {
 
                 <section id="agorava-twitter-demo">
 
-                    <h2>Your tweets</h2>
-                    <!-- AJAX polling or websocket served feed of twitter timeline for @rsmeral #devconf 
-                         Agorava-backed poll of twitter timeline -->
+                    <h2 style="margin-bottom: 0px;">Your tweets</h2>
+                    <!-- Agorava-backed AJAX polling of twitter mentions for @rsmeral #devconf -->
                     <div>
                         <input type="text" id="your-tweets-filter" value="#devconf"/>
                     </div>
@@ -1401,39 +1406,40 @@ public Tweet sendTweet(String msg) {
                             Loading tweets...
                         </div>
                     </div>
+                    <p id="agorava-twitter-demo-at">Demo at <a href="https://github.com/rsmeral/devconf2014-demo">https://github.com/rsmeral/devconf2014-demo</a></p>
                 </section>
 
                 <section id="final-contribute">
                     <h2>How can I contribute?</h2>
                     <div class="fragment">
-			<div>
-				<h3>DeltaSpike</h3>
-				<p>
-				<small><a href="https://git-wip-us.apache.org/repos/asf/deltaspike.git">https://git-wip-us.apache.org/repos/asf/deltaspike.git</a></small><br />
-				<small><a href="https://issues.apache.org/jira/browse/DELTASPIKE">https://issues.apache.org/jira/browse/DELTASPIKE</a></small><br />
-				<small>{users,dev}@deltaspike.apache.org</small>
-				</p>
-                    	</div>
-			<div>
-				<h3>PicketLink</h3>
-				<p>
-				<small><a href="https://github.com/picketlink">https://github.com/picketlink</a></small><br />
-				<small><a href="https://issues.jboss.org/browse/PLINK">https://issues.jboss.org/browse/PLINK</a></small><br />
-				</p>
-			</div>
-			<div>
-				<h3>Agorava</h3>
-				<p>
-				<small><a href="https://github.com/agorava">https://github.com/agorava</a></small><br />
-				<small><a href="https://issues.apache.org/jira/browse/DELTASPIKE">https://issues.jboss.org/browse/AGOVA</a></small><br />
-				</p>
-			</div>
-		    </div>
+                        <div>
+                            <h3>DeltaSpike</h3>
+                            <p>
+                            <small><a href="https://git-wip-us.apache.org/repos/asf/deltaspike.git">https://git-wip-us.apache.org/repos/asf/deltaspike.git</a></small><br />
+                            <small><a href="https://issues.apache.org/jira/browse/DELTASPIKE">https://issues.apache.org/jira/browse/DELTASPIKE</a></small><br />
+                            <small>{users,dev}@deltaspike.apache.org</small>
+                            </p>
+                        </div>
+                        <div>
+                            <h3>PicketLink</h3>
+                            <p>
+                            <small><a href="https://github.com/picketlink">https://github.com/picketlink</a></small><br />
+                            <small><a href="https://issues.jboss.org/browse/PLINK">https://issues.jboss.org/browse/PLINK</a></small><br />
+                            </p>
+                        </div>
+                        <div>
+                            <h3>Agorava</h3>
+                            <p>
+                            <small><a href="https://github.com/agorava">https://github.com/agorava</a></small><br />
+                            <small><a href="https://issues.apache.org/jira/browse/DELTASPIKE">https://issues.jboss.org/browse/AGOVA</a></small><br />
+                            </p>
+                        </div>
+                        <p class="fragment">Slides at <a href="https://github.com/rsmeral/devconf2014">https://github.com/rsmeral/devconf2014</a></p>
+                    </div>
                 </section>
                 
                 <section id="final-questions">
-                    <p>Slides at <a href="https://github.com/rsmeral/devconf2014">https://github.com/rsmeral/devconf2014</a></p>
-                    <img  class="fragment" src="img/got_questions_logo.png" style="border: none; background: none; box-shadow: none;" height="300" />
+                    <img src="img/got_questions_logo.png" style="border: none; background: none; box-shadow: none;" height="300" />
                 </section>
 
                 <section id="final-thanks-feedback">
@@ -1461,7 +1467,7 @@ public Tweet sendTweet(String msg) {
 
             // demo
             var POLL_URL="http://localhost:8080/devconf2014-demo/tweets";// "http://devconf-nzr.rhcloud.com/devconf2014-demo/tweets"
-            var pollSeconds = 15;
+            var pollSeconds = 20;
             var pollTimeout;
 
             function renderTweets(data) {
@@ -1482,6 +1488,10 @@ public Tweet sendTweet(String msg) {
                 clearTimeout(pollTimeout);
                 pollTweets();
                 pollTimeout = setTimeout(startPollingTweets, pollSeconds*1000);
+            }
+            
+            function stopPollingTweets() {
+                clearTimeout(pollTimeout);
             }
             
             Reveal.addEventListener('prepare-tweets', function(event) {
@@ -1528,7 +1538,8 @@ public Tweet sendTweet(String msg) {
                 ],
                 keyboard: {
                     13: 'next', // go to the next slide when the ENTER key is pressed
-                    68: startPollingTweets // 'd' to launch demo
+                    68: startPollingTweets, // 'd' to launch demo
+                    69: stopPollingTweets // 'e' to stop polling
                 }
             });
             
